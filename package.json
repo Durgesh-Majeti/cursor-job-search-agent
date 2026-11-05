@@ -6,6 +6,9 @@
   "scripts": {
     "check": "tsc --noEmit",
     "dev": "agent-sdk dev",
+    "dashboard": "npm --prefix apps/dashboard run dev",
+    "dashboard:build": "npm --prefix apps/dashboard run build",
+    "dashboard:start": "npm --prefix apps/dashboard run start",
     "validate": "agent-sdk validate --dir .",
     "info": "agent-sdk info --dir . --json"
   },

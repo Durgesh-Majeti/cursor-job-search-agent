@@ -1,6 +1,8 @@
 # Project status docs
 
-Snapshot of Job Search Project status documents committed from the Project store.
+Snapshot of Job Search Project status documents, plus local dashboard JSON.
+
+## Status snapshots
 
 | File | Description |
 |------|-------------|
@@ -13,3 +15,15 @@ Snapshot of Job Search Project status documents committed from the Project store
 | [apply-status-batch-1.md](./apply-status-batch-1.md) | Application status for batch 1 |
 | [apply-status-batch-1.json](./apply-status-batch-1.json) | Apply status batch 1 machine-readable twin |
 | [gmail-mcp-setup.md](./gmail-mcp-setup.md) | Gmail MCP setup notes |
+
+## Dashboard + agent (local)
+
+| File | Role |
+| --- | --- |
+| `scout-batch-1.json` | Scouted listings (fit scores, URLs) — shared with dashboard |
+| `apply-status-batch-1.json` | Honest apply outcomes — never invent `applied` |
+| `approvals.json` | Dashboard approve actions; agent reads this before apply |
+
+Workspace artifacts under `bot/sandbox/workspace/applications/<job-id>/` are merged at runtime (`meta.json`, `status.json`).
+
+Local UI: `apps/dashboard` via `npm run dashboard` (do not deploy).

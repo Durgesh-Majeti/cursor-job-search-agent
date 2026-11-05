@@ -15,8 +15,9 @@ Built with [`@grok/agent-sdk`](https://www.npmjs.com/package/@grok/agent-sdk)
 - Optional LoopCV MCP stub (disabled) for listing volume only
 - Notes for Chrome DevTools MCP + self-hosted worker for local apply
 
-The **Canvas approve inbox** is a separate Cursor Project UI — not served from
-this repo.
+The **approve inbox** is a local web dashboard in `apps/dashboard` (Vite + React).
+Canvas was an early MVP only — prefer the dashboard. **Local-only** (`npm run
+dashboard`); do not deploy to Vercel.
 
 ## Prerequisites
 
@@ -57,6 +58,19 @@ LoopCV is **not required**. To enable listing queries:
 4. Re-run `validate`
 
 Endpoint stubbed in the example: `https://api.loopcv.com/mcp`.
+
+## Local dashboard (approve / status)
+
+```bash
+npm --prefix apps/dashboard install
+npm run dashboard
+# UI:  http://127.0.0.1:5173
+# API: http://127.0.0.1:8787
+```
+
+Reads `docs/project/*.json` + `bot/sandbox/workspace/applications/`. Approve
+writes `docs/project/approvals.json` for the agent. See Project Context
+`docs/dashboard.md` for details.
 
 ## Local apply (Chrome + self-hosted worker)
 
