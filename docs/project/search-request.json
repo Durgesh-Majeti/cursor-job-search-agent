@@ -1,7 +1,12 @@
 {
-  "updatedAt": null,
-  "platforms": [],
-  "status": "idle",
-  "filterActive": false,
-  "note": "Dashboard search writes a request here. Live LinkedIn/Indeed need the self-hosted worker + Chrome; ATS scout can run from cloud/agent."
+  "updatedAt": "2026-11-05T11:49:42Z",
+  "platforms": [
+    "greenhouse",
+    "linkedin"
+  ],
+  "status": "ok",
+  "filterActive": true,
+  "resultCount": 42,
+  "liveNeeded": [],
+  "note": "ATS scout retained; LinkedIn Easy Apply live scout merged (20 linkedin jobs, postedWithin=48h). Refresh dashboard to see them."
 }
