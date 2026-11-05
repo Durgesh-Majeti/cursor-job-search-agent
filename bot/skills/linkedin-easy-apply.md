@@ -8,6 +8,27 @@ Local-only playbook for LinkedIn **Easy Apply** using Chrome DevTools MCP on
 the self-hosted worker (`durgesh-laptop`). For Greenhouse / Lever / Ashby /
 Workday, use the `apply` skill instead.
 
+## Recency filter (Durgesh — non-negotiable when searching)
+
+When **searching** LinkedIn Jobs (Jobs search UI or search URL), only consider
+Easy Apply listings in this order:
+
+1. **Last 48 hours** first — LinkedIn Date posted / `f_TPR=r172800`
+   (48 × 3600 seconds).
+2. If that window returns **no** matching Easy Apply results for the current
+   query (title/location/Easy Apply filters), **fall back once** to
+   **last 7 days** — `f_TPR=r604800`.
+3. Do **not** widen past 7 days unless Durgesh explicitly asks.
+4. Record which window you used in the attempt note / scout summary
+   (`posted_within: 48h` or `posted_within: 7d`).
+
+Already-approved jobs with a concrete URL may proceed without re-searching,
+but if the listing UI shows a posted age **older than 7 days**, do not Easy
+Apply — set `blocked` (stale) or ask before continuing.
+
+This same 48h → 7d rule applies whenever this skill (or `scout` on LinkedIn)
+runs a LinkedIn Jobs search on Durgesh's behalf.
+
 ## Preconditions (hard gate)
 
 1. `get_application` / `get_job` — status must be **`approved`** or
@@ -42,10 +63,13 @@ base `resume.pdf`. Never invent employers, dates, metrics, visas, or answers.
 ## Procedure
 
 1. **Gate + status** — Confirm approval. Set application status `applying` with
-   an `attemptNote` that names LinkedIn Easy Apply.
-2. **Open job** — Via Chrome DevTools MCP, open the job URL (or search Jobs for
-   the exact company + title, then open that listing). Confirm title/company
-   match the job record.
+   an `attemptNote` that names LinkedIn Easy Apply (and recency window if
+   search was used).
+2. **Open job** — Via Chrome DevTools MCP, open the job URL when known. If you
+   must **search** Jobs for company + title (or a role query), apply the
+   **Recency filter** above: start at 48h (`f_TPR=r172800`), fall back to 7d
+   (`f_TPR=r604800`) only if empty. Confirm title/company match the job
+   record before continuing.
 3. **Detect Easy Apply**
    - If **Easy Apply** is present, continue.
    - If only **Apply** (external) → hand off to `apply` / ATS playbook; do not
@@ -94,3 +118,5 @@ send mail; never store passwords.
 - Prefer evidence over optimism; when unsure use `needs_human`.
 - Deduplicate: if `list_applications` already shows `applied` for this job,
   do not submit again.
+- LinkedIn **search** recency: **48 hours first**, then **7 days** only if
+  none match — never broader without explicit ask.

@@ -78,7 +78,9 @@ See [`docs/local-apply.md`](docs/local-apply.md). Target worker:
 **`durgesh-laptop`** with Chrome DevTools MCP and Chrome logged into LinkedIn.
 
 - **ATS forms** (Greenhouse → Lever → Ashby → Workday): `apply` skill
-- **LinkedIn Easy Apply**: `linkedin-easy-apply` skill (local only)
+- **LinkedIn Easy Apply**: `linkedin-easy-apply` skill (local only). When
+  searching LinkedIn: **last 48 hours** first, fall back to **last 7 days**
+  if none match.
 
 Until the worker + Chrome session are connected, the agent must classify apply
 attempts as `needs_human` rather than claiming `applied`. Optional Gmail

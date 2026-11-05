@@ -54,15 +54,18 @@ Use skill **`linkedin-easy-apply`** (not the generic ATS `apply` playbook).
    (`https://www.linkedin.com/in/majeti-durgesh/`). Keep that profile session
    available to Chrome DevTools MCP.
 2. Confirm the job is `approved` or `ready_to_apply` in durable state.
-3. On `durgesh-laptop`, ask the agent to Easy Apply the approved LinkedIn job
+3. **Recency when searching LinkedIn Jobs:** Date posted = **last 48 hours**
+   (`f_TPR=r172800`) first. If no Easy Apply matches, fall back once to
+   **last 7 days** (`f_TPR=r604800`). Do not widen further unless asked.
+4. On `durgesh-laptop`, ask the agent to Easy Apply the approved LinkedIn job
    URL. The skill will: open the listing → Easy Apply → fill from profile /
    answer memory → upload resume PDF → submit → hand off to `verify`.
-4. If LinkedIn shows CAPTCHA, login challenge, or MFA:
+5. If LinkedIn shows CAPTCHA, login challenge, or MFA:
    - Agent sets `needs_human` (does not invent `applied`).
    - If a code is emailed and Gmail readonly MCP is connected, the agent may
      read the code and continue; otherwise you complete the challenge in Chrome
      and re-run.
-5. Mark `applied` only when confirmation UI / evidence is clear.
+6. Mark `applied` only when confirmation UI / evidence is clear.
 
 External “Apply” buttons that leave LinkedIn → use the `apply` skill for the
 destination ATS (Greenhouse → Lever → Ashby → Workday).
