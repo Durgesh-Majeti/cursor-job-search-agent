@@ -1,6 +1,6 @@
 {
   "batch": "scout-batch-1",
-  "scoutedAt": "2026-11-05T06:05:00Z",
+  "scoutedAt": "2026-11-05T11:49:42Z",
   "profileCommit": "c17ac1128f18c0b5cdbdd9cdfd08971466036b27",
   "applicationName": "Durgesh Majeti",
   "targetRoles": [
@@ -17,7 +17,7 @@
   "threshold": 70,
   "loopcv": "skipped_not_configured",
   "applied": false,
-  "count": 22,
+  "count": 42,
   "jobs": [
     {
       "id": "gh-databricks-8876680002",
@@ -122,7 +122,7 @@
     {
       "id": "gh-arcana-4169688009",
       "fitScore": 84,
-      "title": "Senior AI Engineer \u2014 Inference & Agent Systems",
+      "title": "Senior AI Engineer — Inference & Agent Systems",
       "company": "Arcana",
       "location": "Bangalore, Hybrid / Remote India",
       "url": "https://job-boards.greenhouse.io/arcanaanalytics/jobs/4169688009",
@@ -167,7 +167,7 @@
       "location": "Bengaluru, India (remote-friendly)",
       "url": "https://www.atlassian.com/company/careers/details/27230",
       "source": "careers",
-      "fitNotes": "Bangalore data platform IC; Flink/MPP emphasis \u2014 adjacent to DE lakehouse work."
+      "fitNotes": "Bangalore data platform IC; Flink/MPP emphasis — adjacent to DE lakehouse work."
     },
     {
       "id": "gh-bottomline-8860069002",
@@ -177,7 +177,7 @@
       "location": "India (Pune / Bangalore / Remote India)",
       "url": "https://job-boards.greenhouse.io/bottomlinetechnologies/jobs/8860069002",
       "source": "greenhouse",
-      "fitNotes": "India FDE AI on Snowflake/Cortex; years bar (~3\u20134) may read junior vs Sr."
+      "fitNotes": "India FDE AI on Snowflake/Cortex; years bar (~3–4) may read junior vs Sr."
     },
     {
       "id": "lever-sws-d3ffbb13",
@@ -238,6 +238,277 @@
       "url": "https://job-boards.greenhouse.io/gleanwork/jobs/4747460005",
       "source": "greenhouse",
       "fitNotes": "Bangalore SE with EMEA shift; AI product adjacency, less IC engineering."
+    },
+    {
+      "id": "li-4487730364",
+      "fitScore": 91,
+      "title": "Forward Deployed Engineer",
+      "company": "Newpage Solutions",
+      "location": "Chennai, India (On-site)",
+      "url": "https://www.linkedin.com/jobs/view/4487730364/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "2 hours ago",
+      "postedWithin": "48h",
+      "fitNotes": "Exact FDE title + Easy Apply; India on-site Chennai."
+    },
+    {
+      "id": "li-4485596872",
+      "fitScore": 90,
+      "title": "Senior Data Engineer",
+      "company": "ThinkWise Consulting LLP",
+      "location": "Hyderabad, India (On-site)",
+      "url": "https://www.linkedin.com/jobs/view/4485596872/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "~1 hour ago",
+      "postedWithin": "48h",
+      "fitNotes": "Priority Senior DE + Hyderabad; LinkedIn top-applicant signal; Easy Apply."
+    },
+    {
+      "id": "li-4486595295",
+      "fitScore": 89,
+      "title": "Forward Deployed Engineer – Healthcare",
+      "company": "VRINDA INTERNATIONAL",
+      "location": "Greater Hyderabad Area (Hybrid)",
+      "url": "https://www.linkedin.com/jobs/view/4486595295/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "17 hours ago",
+      "postedWithin": "48h",
+      "fitNotes": "Target FDE + Hyderabad hybrid; GenAI/RAG/agents/Python/AWS in JD."
+    },
+    {
+      "id": "li-4482924593",
+      "fitScore": 88,
+      "title": "Databricks Engineer",
+      "company": "Omniskope, Inc",
+      "location": "India (Remote)",
+      "url": "https://www.linkedin.com/jobs/view/4482924593/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "5 hours ago",
+      "postedWithin": "48h",
+      "fitNotes": "Remote India Databricks role; strong stack match to current day job."
+    },
+    {
+      "id": "li-4487737623",
+      "fitScore": 87,
+      "title": "Senior Data Engineer - Semantic Layer",
+      "company": "Innova ESI",
+      "location": "Bengaluru, India (On-site)",
+      "url": "https://www.linkedin.com/jobs/view/4487737623/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "50 minutes ago",
+      "postedWithin": "48h",
+      "fitNotes": "Senior DE + Bangalore; semantic/data modeling adjacency."
+    },
+    {
+      "id": "li-4486317960",
+      "fitScore": 86,
+      "title": "Senior AI Engineer",
+      "company": "Jobgether",
+      "location": "India (Remote)",
+      "url": "https://www.linkedin.com/jobs/view/4486317960/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "1 day ago",
+      "postedWithin": "48h",
+      "fitNotes": "Priority Senior AI title + Remote India; Easy Apply."
+    },
+    {
+      "id": "li-4485801771",
+      "fitScore": 85,
+      "title": "Distinguish Data engineer (ARTIFICIAL INTELLIGENCE)",
+      "company": "Fidelity International",
+      "location": "Bengaluru, India (Hybrid)",
+      "url": "https://www.linkedin.com/jobs/view/4485801771/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "2 hours ago",
+      "postedWithin": "48h",
+      "fitNotes": "DE + AI at Fidelity; Bangalore hybrid; Easy Apply."
+    },
+    {
+      "id": "li-4486706182",
+      "fitScore": 84,
+      "title": "Senior Data Engineer",
+      "company": "NielsenIQ",
+      "location": "Chennai, India (On-site)",
+      "url": "https://www.linkedin.com/jobs/view/4486706182/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "viewed / Past 2 days",
+      "postedWithin": "48h",
+      "fitNotes": "Exact Senior DE + Easy Apply; Chennai on-site (location stretch vs Hyd/BLR)."
+    },
+    {
+      "id": "li-4486333469",
+      "fitScore": 83,
+      "title": "Senior Machine Learning Engineer",
+      "company": "Jobgether",
+      "location": "India (Remote)",
+      "url": "https://www.linkedin.com/jobs/view/4486333469/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "1 day ago",
+      "postedWithin": "48h",
+      "fitNotes": "Remote India Senior ML; AI-adjacent to target Senior AI."
+    },
+    {
+      "id": "li-4486590840",
+      "fitScore": 82,
+      "title": "Senior Data & AI Solution Lead",
+      "company": "ATCON GLOBAL",
+      "location": "India (Remote)",
+      "url": "https://www.linkedin.com/jobs/view/4486590840/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "1 hour ago",
+      "postedWithin": "48h",
+      "fitNotes": "Remote Data+AI lead; more solutions than pure IC DE."
+    },
+    {
+      "id": "li-4487702659",
+      "fitScore": 81,
+      "title": "Senior Data Engineer",
+      "company": "Fragomen",
+      "location": "Kochi, India (Remote)",
+      "url": "https://www.linkedin.com/jobs/view/4487702659/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "6 hours ago",
+      "postedWithin": "48h",
+      "fitNotes": "Senior DE remote; Kochi-listed but remote flag."
+    },
+    {
+      "id": "li-4479798243",
+      "fitScore": 80,
+      "title": "Staff Engineer - Machine Learning",
+      "company": "Freshworks",
+      "location": "Bengaluru, India (On-site)",
+      "url": "https://www.linkedin.com/jobs/view/4479798243/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "55 minutes ago",
+      "postedWithin": "48h",
+      "fitNotes": "Bangalore ML; Staff level is a stretch vs Sr DE L2."
+    },
+    {
+      "id": "li-4486700394",
+      "fitScore": 79,
+      "title": "Software Engineer III - ML Systems",
+      "company": "Wayfair",
+      "location": "Bengaluru, India (Hybrid)",
+      "url": "https://www.linkedin.com/jobs/view/4486700394/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "1 hour ago",
+      "postedWithin": "48h",
+      "fitNotes": "Bangalore ML systems; IC engineering adjacent to AI/DE."
+    },
+    {
+      "id": "li-4486587901",
+      "fitScore": 78,
+      "title": "Azure AI Solutions Architect",
+      "company": "CloudGate LLC",
+      "location": "India (Remote)",
+      "url": "https://www.linkedin.com/jobs/view/4486587901/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "~40 minutes ago",
+      "postedWithin": "48h",
+      "fitNotes": "Remote Azure AI SA; Azure overlap, more architect than IC."
+    },
+    {
+      "id": "li-4486368453",
+      "fitScore": 77,
+      "title": "Artificial Intelligence Engineer",
+      "company": "Sonata Software",
+      "location": "Bengaluru, India (On-site)",
+      "url": "https://www.linkedin.com/jobs/view/4486368453/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "1 day ago",
+      "postedWithin": "48h",
+      "fitNotes": "Bangalore AI engineer; title slightly junior vs Senior AI."
+    },
+    {
+      "id": "li-4487732971",
+      "fitScore": 76,
+      "title": "Senior AI and Backend Engineer",
+      "company": "GobbleCube",
+      "location": "Gurugram, India (On-site)",
+      "url": "https://www.linkedin.com/jobs/view/4487732971/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "26 minutes ago",
+      "postedWithin": "48h",
+      "fitNotes": "Senior AI+backend; Gurugram location stretch."
+    },
+    {
+      "id": "li-4486590531",
+      "fitScore": 75,
+      "title": "Founding Data Engineer",
+      "company": "SkillYT",
+      "location": "India (Remote)",
+      "url": "https://www.linkedin.com/jobs/view/4486590531/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "2 hours ago",
+      "postedWithin": "48h",
+      "fitNotes": "Remote founding DE; early-stage risk; Easy Apply."
+    },
+    {
+      "id": "li-4485815204",
+      "fitScore": 74,
+      "title": "Solutions Engineer",
+      "company": "People Equation",
+      "location": "Bangalore Urban (Hybrid)",
+      "url": "https://www.linkedin.com/jobs/view/4485815204/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "1 hour ago",
+      "postedWithin": "48h",
+      "fitNotes": "Bangalore SE; FDE-adjacent customer-facing."
+    },
+    {
+      "id": "li-4485800565",
+      "fitScore": 73,
+      "title": "GenAI Architect",
+      "company": "Persistent Systems",
+      "location": "Pune City (On-site)",
+      "url": "https://www.linkedin.com/jobs/view/4485800565/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "3 hours ago",
+      "postedWithin": "48h",
+      "fitNotes": "GenAI architect; Pune on-site; more SA than IC."
+    },
+    {
+      "id": "li-4468590955",
+      "fitScore": 72,
+      "title": "Senior Staff Data Scientist I",
+      "company": "JioStar",
+      "location": "Greater Bengaluru Area",
+      "url": "https://www.linkedin.com/jobs/view/4468590955/",
+      "source": "linkedin",
+      "easyApply": true,
+      "postedAge": "7 minutes ago",
+      "postedWithin": "48h",
+      "fitNotes": "Bangalore DS; Staff/DS framing vs DE/AI IC targets."
     }
-  ]
+  ],
+  "linkedinScout": {
+    "scoutedAt": "2026-11-05T11:49:42Z",
+    "postedWithin": "48h",
+    "easyApplyOnly": true,
+    "f_TPR": "r172800",
+    "f_AL": true,
+    "fallback7dUsed": false,
+    "linkedinAddedOrUpdated": 20,
+    "linkedinCount": 20,
+    "note": "Past 2 days + Easy Apply filter on India search; 7d fallback not needed."
+  }
 }
