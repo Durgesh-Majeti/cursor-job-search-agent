@@ -1,0 +1,28 @@
+{
+  "placeholder": false,
+  "fullName": "Majeti V S S S Durgesh",
+  "email": "durgesh.majeti.007@gmail.com",
+  "phone": "+91 8885261298",
+  "location": "Visakhapatnam, India",
+  "links": [
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/majeti-durgesh/"
+    }
+  ],
+  "targetRoles": [
+    "Senior Data Engineer",
+    "Data Engineer",
+    "AI Engineer",
+    "ML Engineer",
+    "Analytics Engineer"
+  ],
+  "targetLocations": [],
+  "constraints": [
+    "No fake credentials",
+    "Approve once then apply",
+    "Facts-only resume tailoring — never invent employers, dates, or metrics",
+    "Target locations and work authorization not yet confirmed by user"
+  ],
+  "notes": "Parsed from resume.pdf (June 2024–Present: Senior Data Engineer L2 at Exusia/Globant; prior Data Engineer & Data Scientist at RAPP Indian Ocean / Hangar Worldwide, Mauritius; AI & ML Engineer Intern at LokiBots). Education: MBA IT & FinTech (Manipal, 2022–2024); M.Sc. Data Science and Computing CGPA 8.4 + Dr. APJ Abdul Kalam Gold Medal (SSSIHL, 2019–2021); BCA CGPA 8.1 + Dr. Viswanadh Pandit Gold Medal (SSSIHL, 2016–2019). Certs: AWS Certified Data Analytics Specialty 2023; Databricks Data Analyst Associate 2023; Exusia AI Hero; IBM Hack Challenge Jury's Choice 2020. Target roles inferred from titles/skills — confirm with user. Target locations empty until user specifies (remote / India / relocation / visa)."
+}

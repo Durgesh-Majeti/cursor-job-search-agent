@@ -24,7 +24,7 @@ Run the CLI under Node, never Bun.
 - `bot/mcp-connections/` — enable optional MCP here (empty by default)
 - `bot/host-connections/` — privileged local browser MCP (empty by default)
 - `docs/examples/` — LoopCV + Chrome DevTools connection stubs (copy to enable)
-- `bot/sandbox/workspace/` — profile / resume placeholders
+- `bot/sandbox/workspace/` — profile, experience library, resume (PDF + md)
 - `docs/local-apply.md` — Chrome DevTools MCP + self-hosted worker notes
 - `evals/` — filesystem evals (`evals/evals.config.ts` required)
 

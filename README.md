@@ -64,10 +64,11 @@ See [`docs/local-apply.md`](docs/local-apply.md). Until a self-hosted worker and
 Chrome DevTools MCP are connected, the agent must classify apply attempts as
 `needs_human` rather than claiming `applied`.
 
-## Placeholders
+## Profile materials
 
-Replace files under `bot/sandbox/workspace/` (profile, experience library,
-resume) then run the `setup` skill. User-supplied resume/targets come later.
+Resume + profile live under `bot/sandbox/workspace/` (`profile.json`,
+`experience-library.json`, `resume.md`, `resume.pdf`). Run the `setup` skill
+to load them into `host.kv`. Confirm target locations before scouting.
 
 ## Skills
 
