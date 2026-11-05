@@ -15,6 +15,15 @@ import {
   resolveGmailMcpDir,
   syncGmailConfirmations,
 } from "./gmail-local.mjs";
+import {
+  claimQueuedJob,
+  loadJobArtifacts,
+  readRunnerStatus,
+  recordApplyOutcome,
+  RUN_REQUEST_FILE,
+  upsertQueueEntry,
+  readJson as readProjectJson,
+} from "./apply-queue-lib.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "../..");
@@ -414,9 +423,8 @@ async function applyJob(jobId, note) {
     note || "Apply requested via dashboard — worker should submit with Chrome",
   );
 
-  const { file, data } = await loadApplyQueue();
   const now = new Date().toISOString();
-  const entry = {
+  const entry = await upsertQueueEntry({
     jobId: job.id,
     queuedAt: now,
     status: "queued",
@@ -428,16 +436,7 @@ async function applyJob(jobId, note) {
     note:
       note ||
       "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
-  };
-  const queue = Array.isArray(data.queue) ? data.queue : [];
-  const idx = queue.findIndex((q) => q.jobId === job.id);
-  if (idx >= 0) queue[idx] = { ...queue[idx], ...entry };
-  else queue.push(entry);
-  data.queue = queue;
-  data.updatedAt = now;
-  data.note =
-    "Agent/self-hosted worker watches this queue. Apply from the dashboard enqueues a job; Chrome DevTools MCP on the worker performs the browser apply.";
-  await writeJson(file, data);
+  });
 
   // Clear skip/block if re-applying
   const decisions = await loadDecisions();
@@ -448,12 +447,80 @@ async function applyJob(jobId, note) {
     await writeJson(decisions.file, decisions.data);
   }
 
+  const runner = await readRunnerStatus();
+  let claimed = null;
+  let message;
+  if (runner.alive) {
+    // Runner is up — claim immediately so Chrome/agent handshake is ready
+    const claim = await claimQueuedJob(job.id);
+    claimed = claim.claimed ? claim.entry : null;
+    message = claimed
+      ? `Queued and claimed by local apply runner — Chrome/agent should apply ${job.id} now (see docs/project/apply-run-request.json).`
+      : `Queued — local apply runner is alive and will claim ${job.id} shortly.`;
+  } else {
+    message = `Queued — start apply worker: npm run apply-queue (then Chrome DevTools MCP / agent on durgesh-laptop).`;
+  }
+
+  const artifacts = await loadJobArtifacts(job.id);
+
   return {
     saved: true,
     approval,
-    queueEntry: entry,
-    message:
-      "Queued for Chrome apply on the self-hosted worker (docs/project/apply-queue.json).",
+    queueEntry: claimed || entry,
+    runner,
+    claimed: Boolean(claimed),
+    artifacts: {
+      dir: artifacts.dir,
+      hasResumePdf: Boolean(artifacts.resumePdf),
+      hasAnswers: Boolean(artifacts.answers),
+    },
+    message,
+    jobs: await buildJobs(),
+  };
+}
+
+async function applyRun(body = {}) {
+  const runner = await readRunnerStatus();
+  const claim = await claimQueuedJob(body.jobId || null);
+  if (!claim.claimed) {
+    return {
+      claimed: false,
+      runner,
+      message: body.jobId
+        ? `No queued/in_progress entry for ${body.jobId}`
+        : "No queued jobs in docs/project/apply-queue.json",
+      request: await readProjectJson(RUN_REQUEST_FILE, null),
+      jobs: await buildJobs(),
+    };
+  }
+  return {
+    claimed: true,
+    runner,
+    entry: claim.entry,
+    request: claim.request,
+    message: `Claimed ${claim.entry.jobId} for Chrome apply. Drive DevTools MCP, then POST /api/apply-result.`,
+    jobs: await buildJobs(),
+  };
+}
+
+async function applyResult(body = {}) {
+  if (!body.jobId) throw httpError(400, "jobId required");
+  if (!body.status) throw httpError(400, "status required (applied|blocked|needs_human)");
+  const outcome = await recordApplyOutcome({
+    jobId: body.jobId,
+    status: body.status,
+    reason: body.reason,
+    evidence: body.evidence,
+    company: body.company,
+    title: body.title,
+    url: body.url,
+    source: body.source,
+    via: body.via || "dashboard_api",
+  });
+  return {
+    saved: true,
+    outcome,
+    message: `Recorded ${outcome.status} for ${outcome.jobId}`,
     jobs: await buildJobs(),
   };
 }
@@ -995,6 +1062,15 @@ async function handleApi(req, res, url) {
   if (req.method === "POST" && url.pathname === "/api/apply") {
     const body = await readBody(req);
     return sendJson(res, 200, await applyJob(body.jobId, body.note));
+  }
+  if (req.method === "GET" && url.pathname === "/api/apply-runner") {
+    return sendJson(res, 200, await readRunnerStatus());
+  }
+  if (req.method === "POST" && url.pathname === "/api/apply-run") {
+    return sendJson(res, 200, await applyRun(await readBody(req)));
+  }
+  if (req.method === "POST" && url.pathname === "/api/apply-result") {
+    return sendJson(res, 200, await applyResult(await readBody(req)));
   }
   if (req.method === "POST" && url.pathname === "/api/skip") {
     const body = await readBody(req);

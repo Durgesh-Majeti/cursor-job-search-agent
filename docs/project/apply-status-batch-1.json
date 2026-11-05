@@ -1,15 +1,15 @@
 {
   "batch": "approved-batch-1",
-  "updatedAt": "2026-11-05T10:32:58.643Z",
+  "updatedAt": "2026-11-05T11:19:43.989Z",
   "applicationName": "Durgesh Majeti",
   "repoCommit": "92bbdc0",
   "artifactsPushedToMain": true,
   "worker": "durgesh-laptop",
   "counts": {
-    "applied": 2,
+    "applied": 3,
     "blocked": 1,
     "needs_human": 5,
-    "pending_local": 12
+    "pending_local": 11
   },
   "note": "First confirmed apply: Databricks FDE L5 after user entered Greenhouse email security code. MCP upload_file ACL blocks resume path on this worker; Greenhouse may autofill. No invented applied statuses.",
   "jobs": [
@@ -179,11 +179,16 @@
       "jobId": "ashby-openai-4c078f82",
       "company": "OpenAI",
       "title": "Forward Deployed Engineer - Singapore",
-      "source": "ashby",
+      "source": "chrome_devtools_mcp_apply_queue",
       "url": "https://jobs.ashbyhq.com/openai/4c078f82-93b9-427c-8fd8-95de198884b4",
-      "status": "pending_local",
-      "reason": "Artifacts ready; local apply",
-      "artifactPath": "bot/sandbox/workspace/applications/ashby-openai-4c078f82/"
+      "status": "applied",
+      "reason": "Ashby success: Your application was successfully submitted. We will contact you if there are next steps.",
+      "artifactPath": "bot/sandbox/workspace/applications/ashby-openai-4c078f82/",
+      "evidence": [
+        "https://jobs.ashbyhq.com/openai/4c078f82-93b9-427c-8fd8-95de198884b4/application",
+        "Success heading + Your application was successfully submitted."
+      ],
+      "confirmedAt": "2026-11-05T11:19:43.989Z"
     },
     {
       "jobId": "gh-databricks-8530855002",

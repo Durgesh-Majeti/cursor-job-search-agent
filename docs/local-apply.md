@@ -78,14 +78,35 @@ inbox. Clicking **Apply** on a job:
 
 1. Writes/updates `docs/project/approvals.json` (`status: approved`)
 2. Enqueues the job in **`docs/project/apply-queue.json`** (`status: queued`)
+3. If `npm run apply-queue` is heartbeating, **claims** the job (`in_progress`)
+   and writes **`docs/project/apply-run-request.json`** for Chrome/agent
+4. If the runner is **not** running, the API/UI message is:
+   `Queued — start apply worker: npm run apply-queue …`
 
-The self-hosted worker / agent should **watch** `docs/project/apply-queue.json`,
-run Chrome DevTools apply (ATS or `linkedin-easy-apply`), then update
-`apply-status*.json` / workspace `status.json` with evidence. The dashboard
-never drives the browser or invents `applied`.
+### Terminals (typical)
 
-Skip/Block from the UI writes `docs/project/job-decisions.json` and removes the
-job from the queue.
+```powershell
+# terminal A
+npm run dashboard
+
+# terminal B — leave running while applying
+npm run apply-queue
+```
+
+### Agent / Chrome handoff
+
+1. Runner (or `POST /api/apply-run`) claims the next `queued` job.
+2. On **durgesh-laptop**, the Cursor agent opens the job URL with **Chrome
+   DevTools MCP**, fills from `bot/sandbox/workspace/applications/<job-id>/`
+   (resume PDF, `answers.json`), and submits when safe.
+3. CAPTCHA / email verify → `needs_human`, leave the tab open, **do not invent
+   codes** (optional later: Gmail sync / readonly MCP).
+4. Record outcome: `POST /api/apply-result` with
+   `{ "jobId", "status": "applied"|"blocked"|"needs_human", "reason", "evidence" }`
+   (updates queue + `apply-status-batch-1.json` + workspace `status.json`).
+
+The dashboard never invents `applied`. Skip/Block writes
+`docs/project/job-decisions.json` and removes the job from the queue.
 
 ## Safety
 
