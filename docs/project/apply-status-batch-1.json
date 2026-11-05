@@ -1,15 +1,15 @@
 {
   "batch": "approved-batch-1",
-  "updatedAt": "2026-11-05T07:22:00Z",
+  "updatedAt": "2026-11-05T10:32:58.643Z",
   "applicationName": "Durgesh Majeti",
   "repoCommit": "92bbdc0",
   "artifactsPushedToMain": true,
   "worker": "durgesh-laptop",
   "counts": {
-    "applied": 1,
+    "applied": 2,
     "blocked": 1,
     "needs_human": 5,
-    "pending_local": 13
+    "pending_local": 12
   },
   "note": "First confirmed apply: Databricks FDE L5 after user entered Greenhouse email security code. MCP upload_file ACL blocks resume path on this worker; Greenhouse may autofill. No invented applied statuses.",
   "jobs": [
@@ -125,9 +125,15 @@
       "title": "Senior AI Engineer — Inference & Agent Systems",
       "source": "greenhouse",
       "url": "https://job-boards.greenhouse.io/arcanaanalytics/jobs/4169688009",
-      "status": "pending_local",
-      "reason": "Artifacts ready; local apply",
-      "artifactPath": "bot/sandbox/workspace/applications/gh-arcana-4169688009/"
+      "status": "applied",
+      "reason": "Thank you for applying to Arcana Analytics",
+      "artifactPath": "bot/sandbox/workspace/applications/gh-arcana-4169688009/",
+      "evidence": [
+        "gmail:confirmation:Thank you for applying to Arcana Analytics",
+        "gmail:confirmation:Thank you for applying to Arcana Analytics"
+      ],
+      "confirmedAt": "2026-11-05T07:31:11.000Z",
+      "gmailClassification": "confirmation"
     },
     {
       "jobId": "gh-databricks-7845325002",

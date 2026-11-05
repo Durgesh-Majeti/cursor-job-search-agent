@@ -237,7 +237,18 @@ export function App() {
       if (!res.ok) throw new Error(body.error || `Gmail sync failed (${res.status})`);
       setGmail(body.gmail as GmailStatus);
       if (body.jobs) setData(body.jobs as JobsResponse);
-      setNotice(body.message || body.gmail?.note || "Gmail status refreshed");
+      if (body.connected === false || body.gmail?.connected === false) {
+        const detail =
+          body.error ||
+          body.gmail?.error ||
+          body.message ||
+          body.gmail?.note ||
+          "Gmail not connected. Place OAuth files under %USERPROFILE%\\.gmail-mcp (see docs/project/gmail-mcp-setup.md).";
+        setError(detail);
+        setNotice(null);
+      } else {
+        setNotice(body.message || body.gmail?.note || "Gmail status refreshed");
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {

@@ -2,7 +2,7 @@
 /**
  * Local dashboard API + static server.
  * Resume upload/analyse, platform search stubs, job inbox, apply queue,
- * skip/block, Gmail confirmation sync stub.
+ * skip/block, Gmail confirmation sync via local OAuth (.gmail-mcp).
  * Local-only — do not deploy.
  */
 import http from "node:http";
@@ -10,6 +10,11 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawn } from "node:child_process";
+import {
+  probeGmailConnection,
+  resolveGmailMcpDir,
+  syncGmailConfirmations,
+} from "./gmail-local.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "../..");
@@ -728,6 +733,86 @@ async function searchJobs(body) {
   };
 }
 
+function classificationToApplyStatus(classification) {
+  const c = String(classification || "").toLowerCase();
+  // Only confirmation→applied and rejection→blocked mutate apply-status.
+  // Interview/verification stay as confirmation rows (avoid newsletter false positives).
+  if (c === "confirmation" || c === "applied") return "applied";
+  if (c === "rejection") return "blocked";
+  return null;
+}
+
+async function applyGmailConfirmationsToStatus(confirmations, now) {
+  const { data: applyStatus, file: applyFile } = await loadApplyStatus();
+  const jobs = Array.isArray(applyStatus.jobs) ? applyStatus.jobs : [];
+  let markedApplied = 0;
+  let markedOther = 0;
+
+  for (const c of confirmations || []) {
+    if (!c?.jobId) continue;
+    const nextStatus = classificationToApplyStatus(c.classification);
+    if (!nextStatus) continue;
+    const idx = jobs.findIndex((j) => j.jobId === c.jobId);
+    if (idx < 0) continue;
+    const current = String(jobs[idx].status || "").toLowerCase();
+    // Never downgrade or re-write an already-applied row.
+    if (current === "applied") continue;
+    if (current === nextStatus) continue;
+
+    const evidence = [
+      ...(Array.isArray(jobs[idx].evidence) ? jobs[idx].evidence : []),
+      `gmail:${c.classification}:${c.subject || c.date || now}`,
+    ];
+    jobs[idx] = {
+      ...jobs[idx],
+      status: nextStatus,
+      reason:
+        c.subject ||
+        c.reason ||
+        `Gmail ${c.classification} via dashboard sync`,
+      evidence,
+      confirmedAt: c.date || now,
+      gmailClassification: c.classification,
+    };
+    if (nextStatus === "applied") markedApplied += 1;
+    else markedOther += 1;
+
+    // Mirror into workspace status.json when present
+    const artifact = jobs[idx].artifactPath;
+    if (artifact) {
+      const statusPath = path.join(REPO_ROOT, artifact, "status.json");
+      const existing = await readJson(statusPath, null);
+      if (existing || artifact.includes("applications/")) {
+        await writeJson(statusPath, {
+          ...(existing || {}),
+          status: nextStatus,
+          reason: jobs[idx].reason,
+          evidence,
+          updatedAt: now,
+          source: "gmail_local_sync",
+        });
+      }
+    }
+  }
+
+  if (markedApplied + markedOther > 0) {
+    applyStatus.jobs = jobs;
+    applyStatus.updatedAt = now;
+    const counts = { applied: 0, blocked: 0, needs_human: 0, pending_local: 0 };
+    for (const j of jobs) {
+      const s = String(j.status || "");
+      if (s === "applied") counts.applied += 1;
+      else if (s === "blocked") counts.blocked += 1;
+      else if (s === "needs_human") counts.needs_human += 1;
+      else counts.pending_local += 1;
+    }
+    applyStatus.counts = { ...(applyStatus.counts || {}), ...counts };
+    await writeJson(applyFile, applyStatus);
+  }
+
+  return { markedApplied, markedOther };
+}
+
 async function gmailStatus() {
   const file = path.join(PROJECT_DIR, "gmail-confirmations.json");
   const data = await readJson(file, {
@@ -735,19 +820,23 @@ async function gmailStatus() {
     connected: false,
     confirmations: [],
   });
+  const probe = await probeGmailConnection();
+  const connected = Boolean(probe.connected);
   return {
-    connected: Boolean(data.connected),
+    connected,
     updatedAt: data.updatedAt || null,
-    source: data.source || "stub",
-    note:
-      data.note ||
-      "Gmail MCP (gmail.readonly) runs on the self-hosted worker. Dashboard sync accepts confirmation JSON until the MCP bridge lands. Setup: docs/project/gmail-mcp-setup.md",
+    source: data.source || (connected ? "local_oauth" : "disconnected"),
+    note: connected
+      ? data.note || probe.note
+      : probe.error || probe.note,
+    error: connected ? null : probe.error || null,
+    credentialsDir: probe.credentialsDir || resolveGmailMcpDir(),
     confirmationCount: (data.confirmations || []).length,
     confirmations: data.confirmations || [],
   };
 }
 
-async function gmailSync(body) {
+async function gmailSync(body = {}) {
   const file = path.join(PROJECT_DIR, "gmail-confirmations.json");
   const existing = await readJson(file, {
     updatedAt: null,
@@ -756,6 +845,7 @@ async function gmailSync(body) {
   });
   const now = new Date().toISOString();
 
+  // Manual ingest still supported (tests / offline paste)
   if (Array.isArray(body.confirmations)) {
     existing.confirmations = body.confirmations;
     existing.connected = body.connected !== false;
@@ -763,58 +853,99 @@ async function gmailSync(body) {
     existing.updatedAt = now;
     existing.note =
       body.note ||
-      "Confirmations provided to dashboard API. Agent/worker may later bridge Gmail MCP search results here.";
+      "Confirmations provided to dashboard API (manual upload).";
+    existing.error = null;
     await writeJson(file, existing);
 
-    // Optionally mark matching jobs applied when confirmation claims applied
-    const { data: applyStatus, file: applyFile } = await loadApplyStatus();
-    let touched = 0;
-    for (const c of body.confirmations) {
-      if (!c?.jobId || String(c.classification || "").toLowerCase() !== "applied") continue;
-      const jobs = Array.isArray(applyStatus.jobs) ? applyStatus.jobs : [];
-      const idx = jobs.findIndex((j) => j.jobId === c.jobId);
-      if (idx >= 0 && jobs[idx].status !== "applied") {
-        jobs[idx] = {
-          ...jobs[idx],
-          status: "applied",
-          reason: c.subject || c.reason || "Gmail confirmation via dashboard sync",
-          evidence: [
-            ...(Array.isArray(jobs[idx].evidence) ? jobs[idx].evidence : []),
-            `gmail:${c.subject || c.date || now}`,
-          ],
-          confirmedAt: c.date || now,
-        };
-        touched += 1;
-      }
-    }
-    if (touched > 0) {
-      applyStatus.jobs = applyStatus.jobs;
-      applyStatus.updatedAt = now;
-      await writeJson(applyFile, applyStatus);
-    }
+    const { markedApplied, markedOther } = await applyGmailConfirmationsToStatus(
+      body.confirmations,
+      now,
+    );
 
     return {
       saved: true,
-      markedApplied: touched,
+      markedApplied,
+      markedOther,
       gmail: await gmailStatus(),
       jobs: await buildJobs(),
     };
   }
 
-  // No payload — stub "connect" / refresh status
+  const { data: applyStatus } = await loadApplyStatus();
+  const scout = await readJson(path.join(PROJECT_DIR, "scout-batch-1.json"), {
+    jobs: [],
+  });
+  const knownJobs = [
+    ...(applyStatus.jobs || []).map((j) => ({
+      jobId: j.jobId,
+      company: j.company,
+      title: j.title,
+      status: j.status,
+    })),
+    ...(scout.jobs || []).map((j) => ({
+      jobId: j.id,
+      company: j.company,
+      title: j.title,
+      status: null,
+    })),
+  ];
+
+  const lookbackDays = Number(body.lookbackDays) || 30;
+  const sync = await syncGmailConfirmations({
+    lookbackDays,
+    jobs: knownJobs,
+  });
+
+  if (!sync.connected) {
+    existing.updatedAt = now;
+    existing.source = "local_oauth";
+    existing.connected = false;
+    existing.note = sync.error || sync.note;
+    existing.error = sync.error || sync.note;
+    existing.credentialsDir = sync.credentialsDir || resolveGmailMcpDir();
+    await writeJson(file, existing);
+    return {
+      saved: false,
+      connected: false,
+      error: sync.error || sync.note,
+      markedApplied: 0,
+      markedOther: 0,
+      scanned: sync.scanned || 0,
+      gmail: await gmailStatus(),
+      jobs: await buildJobs(),
+      message: sync.error || sync.note,
+    };
+  }
+
+  // Live sync replaces confirmation rows (avoids stale misclassifications)
+  existing.confirmations = [...(sync.confirmations || [])].sort((a, b) =>
+    String(b.date || "").localeCompare(String(a.date || "")),
+  );
+  existing.connected = true;
+  existing.source = "local_oauth";
   existing.updatedAt = now;
-  existing.source = "stub_refresh";
-  existing.connected = false;
-  existing.note =
-    "Gmail MCP not bridged to this local API yet. Authorize gmail.readonly on the laptop (docs/project/gmail-mcp-setup.md), then POST confirmations JSON or wire the worker bridge.";
+  existing.note = sync.note;
+  existing.error = null;
+  existing.credentialsDir = sync.credentialsDir;
+  existing.scanned = sync.scanned;
+  existing.lookbackDays = sync.lookbackDays;
   await writeJson(file, existing);
+
+  const { markedApplied, markedOther } = await applyGmailConfirmationsToStatus(
+    sync.confirmations,
+    now,
+  );
 
   return {
     saved: true,
-    markedApplied: 0,
+    connected: true,
+    markedApplied,
+    markedOther,
+    scanned: sync.scanned,
+    confirmationCount: existing.confirmations.length,
     gmail: await gmailStatus(),
     jobs: await buildJobs(),
-    message: existing.note,
+    message: sync.note,
   };
 }
 
@@ -873,10 +1004,13 @@ async function handleApi(req, res, url) {
     const body = await readBody(req);
     return sendJson(res, 200, await decideJob(body.jobId, "blocked", body.note));
   }
-  if (req.method === "GET" && url.pathname === "/api/gmail") {
+  if (req.method === "GET" && (url.pathname === "/api/gmail" || url.pathname === "/api/sync-gmail")) {
     return sendJson(res, 200, await gmailStatus());
   }
-  if (req.method === "POST" && url.pathname === "/api/gmail/sync") {
+  if (
+    req.method === "POST" &&
+    (url.pathname === "/api/gmail/sync" || url.pathname === "/api/sync-gmail")
+  ) {
     return sendJson(res, 200, await gmailSync(await readBody(req)));
   }
   sendJson(res, 404, { error: "Not found" });

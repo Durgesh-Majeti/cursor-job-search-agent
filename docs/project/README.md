@@ -14,7 +14,7 @@ Snapshot of Job Search Project status documents, plus local dashboard JSON.
 | [approved-batch-1.json](./approved-batch-1.json) | Approved batch 1 machine-readable twin |
 | [apply-status-batch-1.md](./apply-status-batch-1.md) | Application status for batch 1 |
 | [apply-status-batch-1.json](./apply-status-batch-1.json) | Apply status batch 1 machine-readable twin |
-| [gmail-mcp-setup.md](./gmail-mcp-setup.md) | Gmail MCP setup notes |
+| [gmail-mcp-setup.md](./gmail-mcp-setup.md) | Gmail OAuth / MCP setup (`%USERPROFILE%\\.gmail-mcp`) |
 
 ## Dashboard + agent (local)
 
@@ -27,7 +27,7 @@ Snapshot of Job Search Project status documents, plus local dashboard JSON.
 | `job-decisions.json` | Skip / block from dashboard |
 | `resume-analysis.json` | Last heuristic resume analysis (created on Analyse) |
 | `search-request.json` | Last platform search request |
-| `gmail-confirmations.json` | Gmail sync stub / ingested confirmation rows |
+| `gmail-confirmations.json` | Gmail sync results (local OAuth or manual ingest) |
 
 Workspace artifacts under `bot/sandbox/workspace/applications/<job-id>/` are merged at runtime (`meta.json`, `status.json`). Uploads land in `bot/sandbox/workspace/uploads/`.
 

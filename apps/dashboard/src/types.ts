@@ -77,4 +77,6 @@ export type GmailStatus = {
   confirmationCount: number;
   confirmations: unknown[];
   message?: string;
+  error?: string | null;
+  credentialsDir?: string | null;
 };
