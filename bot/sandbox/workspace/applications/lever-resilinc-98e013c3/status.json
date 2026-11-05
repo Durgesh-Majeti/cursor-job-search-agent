@@ -1,0 +1,14 @@
+{
+  "jobId": "lever-resilinc-98e013c3",
+  "company": "Resilinc",
+  "title": "Senior Data Engineer",
+  "status": "needs_human",
+  "reason": "hCaptcha challenge blocked submit after form fill + resume upload",
+  "evidence": [
+    "evidence-captcha.png",
+    "Form filled with Durgesh Majeti / profile answers; resume.pdf uploaded (Success!); submit triggered invisible hCaptcha"
+  ],
+  "attemptedAt": "2026-11-05T06:25:00Z",
+  "url": "https://jobs.lever.co/resilinc/98e013c3-84ff-4596-8712-6401c0fb3d55/apply",
+  "humanNextStep": "Solve hCaptcha on Lever apply page and click Submit Application"
+}

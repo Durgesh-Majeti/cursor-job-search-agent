@@ -1,0 +1,17 @@
+{
+  "jobId": "careers-atlassian-27230",
+  "company": "Atlassian",
+  "title": "Senior Data Platform Engineer",
+  "url": "https://www.atlassian.com/company/careers/details/27230",
+  "source": "careers",
+  "fitScore": 81,
+  "bucket": "de",
+  "artifacts": [
+    "resume.md",
+    "resume.pdf",
+    "cover-letter.md",
+    "answers.json"
+  ],
+  "pdfSource": "generated_tailored",
+  "status": "ready_to_apply"
+}

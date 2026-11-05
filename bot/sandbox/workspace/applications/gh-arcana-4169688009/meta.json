@@ -1,0 +1,17 @@
+{
+  "jobId": "gh-arcana-4169688009",
+  "company": "Arcana",
+  "title": "Senior AI Engineer \u2014 Inference & Agent Systems",
+  "url": "https://job-boards.greenhouse.io/arcanaanalytics/jobs/4169688009",
+  "source": "greenhouse",
+  "fitScore": 84,
+  "bucket": "ai",
+  "artifacts": [
+    "resume.md",
+    "resume.pdf",
+    "cover-letter.md",
+    "answers.json"
+  ],
+  "pdfSource": "generated_tailored",
+  "status": "ready_to_apply"
+}

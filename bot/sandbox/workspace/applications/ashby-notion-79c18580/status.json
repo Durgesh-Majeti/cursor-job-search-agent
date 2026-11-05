@@ -1,0 +1,11 @@
+{
+  "jobId": "ashby-notion-79c18580",
+  "company": "Notion",
+  "title": "Forward Deployed Engineer, India",
+  "status": "needs_human",
+  "reason": "reCAPTCHA Enterprise challenge after full form fill + resume upload + submit click",
+  "evidence": ["Form completed: name/email/phone/Hyderabad location/resume/LinkedIn/Anchor Days=Yes/Sponsorship=No; submit triggered recaptcha bframe; no thank-you page"],
+  "attemptedAt": "2026-11-05T06:35:00Z",
+  "url": "https://jobs.ashbyhq.com/notion/79c18580-c927-456c-9d5f-72efbc6c43cb/application",
+  "humanNextStep": "Solve Ashby reCAPTCHA and submit"
+}

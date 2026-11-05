@@ -1,0 +1,17 @@
+{
+  "jobId": "gh-gleanwork-4747460005",
+  "company": "Glean",
+  "title": "Solutions Engineer (EMEA Shift)",
+  "url": "https://job-boards.greenhouse.io/gleanwork/jobs/4747460005",
+  "source": "greenhouse",
+  "fitScore": 74,
+  "bucket": "sa",
+  "artifacts": [
+    "resume.md",
+    "resume.pdf",
+    "cover-letter.md",
+    "answers.json"
+  ],
+  "pdfSource": "generated_tailored",
+  "status": "ready_to_apply"
+}

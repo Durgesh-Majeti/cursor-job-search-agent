@@ -1,0 +1,17 @@
+{
+  "jobId": "gh-databricks-8878946002",
+  "company": "Databricks",
+  "title": "Evergreen - AI Engineer, AI FDE",
+  "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8878946002",
+  "source": "greenhouse",
+  "fitScore": 91,
+  "bucket": "fde",
+  "artifacts": [
+    "resume.md",
+    "resume.pdf",
+    "cover-letter.md",
+    "answers.json"
+  ],
+  "pdfSource": "generated_tailored",
+  "status": "ready_to_apply"
+}

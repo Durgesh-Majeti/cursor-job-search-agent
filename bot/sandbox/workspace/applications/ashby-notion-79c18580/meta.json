@@ -1,0 +1,17 @@
+{
+  "jobId": "ashby-notion-79c18580",
+  "company": "Notion",
+  "title": "Forward Deployed Engineer, India",
+  "url": "https://jobs.ashbyhq.com/notion/79c18580-c927-456c-9d5f-72efbc6c43cb",
+  "source": "ashby",
+  "fitScore": 90,
+  "bucket": "fde",
+  "artifacts": [
+    "resume.md",
+    "resume.pdf",
+    "cover-letter.md",
+    "answers.json"
+  ],
+  "pdfSource": "generated_tailored",
+  "status": "ready_to_apply"
+}

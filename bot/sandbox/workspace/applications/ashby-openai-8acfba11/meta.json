@@ -1,0 +1,17 @@
+{
+  "jobId": "ashby-openai-8acfba11",
+  "company": "OpenAI",
+  "title": "Applied AI Engineer",
+  "url": "https://jobs.ashbyhq.com/openai/8acfba11-707e-4d8e-a860-88643fae24ba",
+  "source": "ashby",
+  "fitScore": 76,
+  "bucket": "ai",
+  "artifacts": [
+    "resume.md",
+    "resume.pdf",
+    "cover-letter.md",
+    "answers.json"
+  ],
+  "pdfSource": "generated_tailored",
+  "status": "ready_to_apply"
+}

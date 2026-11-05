@@ -1,0 +1,17 @@
+{
+  "jobId": "gh-karat-8880766002",
+  "company": "Karat",
+  "title": "Senior Data Engineer (India)",
+  "url": "https://job-boards.greenhouse.io/karat/jobs/8880766002",
+  "source": "greenhouse",
+  "fitScore": 82,
+  "bucket": "de",
+  "artifacts": [
+    "resume.md",
+    "resume.pdf",
+    "cover-letter.md",
+    "answers.json"
+  ],
+  "pdfSource": "generated_tailored",
+  "status": "ready_to_apply"
+}

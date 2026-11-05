@@ -1,0 +1,17 @@
+{
+  "jobId": "careers-h2o-Y4XkgBiojT",
+  "company": "H2O.ai",
+  "title": "Senior AI Engineer",
+  "url": "https://h2oai.applytojob.com/apply/Y4XkgBiojT/Senior-AI-Engineer",
+  "source": "careers",
+  "fitScore": 93,
+  "bucket": "ai",
+  "artifacts": [
+    "resume.md",
+    "resume.pdf",
+    "cover-letter.md",
+    "answers.json"
+  ],
+  "pdfSource": "generated_tailored",
+  "status": "ready_to_apply"
+}

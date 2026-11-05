@@ -1,0 +1,6 @@
+{
+  "status": "needs_human",
+  "reason": "reCAPTCHA challenge required after filling form (fire hydrant image selection)",
+  "evidence": "evidence-captcha.png",
+  "notes": "Form fully filled: name, email, phone, address, resume, LinkedIn, salary, notice period, Q1=Yes, Q2=No, Q3=No. CAPTCHA appeared on submit attempt."
+}
