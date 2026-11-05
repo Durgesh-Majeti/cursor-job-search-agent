@@ -1,0 +1,23 @@
+{
+  "name": "job-search-agent",
+  "private": true,
+  "type": "module",
+  "description": "Agent SDK job-search agent: scout, fit, tailor, apply (with human approval), track",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "dev": "agent-sdk dev",
+    "validate": "agent-sdk validate --dir .",
+    "info": "agent-sdk info --dir . --json"
+  },
+  "dependencies": {
+    "@grok/agent-sdk": "^0.6.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "typescript": "6.0.3"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

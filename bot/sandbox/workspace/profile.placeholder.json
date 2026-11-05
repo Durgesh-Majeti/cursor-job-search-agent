@@ -1,0 +1,12 @@
+{
+  "placeholder": true,
+  "fullName": "YOUR NAME",
+  "email": "you@example.com",
+  "phone": "",
+  "location": "",
+  "links": [],
+  "targetRoles": ["Replace with target titles"],
+  "targetLocations": ["Remote", "Replace with cities"],
+  "constraints": ["No fake credentials", "Approve once then apply"],
+  "notes": "User will supply a real profile later. Do not invent facts."
+}
