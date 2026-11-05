@@ -1,0 +1,223 @@
+{
+  "batch": "approved-batch-1",
+  "updatedAt": "2026-11-05T07:22:00Z",
+  "applicationName": "Durgesh Majeti",
+  "repoCommit": "92bbdc0",
+  "artifactsPushedToMain": true,
+  "worker": "durgesh-laptop",
+  "counts": {
+    "applied": 1,
+    "blocked": 1,
+    "needs_human": 5,
+    "pending_local": 13
+  },
+  "note": "First confirmed apply: Databricks FDE L5 after user entered Greenhouse email security code. MCP upload_file ACL blocks resume path on this worker; Greenhouse may autofill. No invented applied statuses.",
+  "jobs": [
+    {
+      "jobId": "gh-databricks-8876680002",
+      "company": "Databricks",
+      "title": "Senior Forward Deployed Engineer, Sr FDE (L5)",
+      "source": "greenhouse",
+      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8876680002",
+      "status": "applied",
+      "reason": "Greenhouse confirmation: Thank you for applying to Databricks!",
+      "evidence": [
+        "confirmation?for=databricks&token=8876680002",
+        "Thank you for applying to Databricks!",
+        "Your application has been received."
+      ],
+      "confirmedAt": "2026-11-05T07:22:00Z",
+      "artifactPath": "bot/sandbox/workspace/applications/gh-databricks-8876680002/"
+    },
+    {
+      "jobId": "careers-h2o-Y4XkgBiojT",
+      "company": "H2O.ai",
+      "title": "Senior AI Engineer",
+      "source": "careers",
+      "url": "https://h2oai.applytojob.com/apply/Y4XkgBiojT/Senior-AI-Engineer",
+      "status": "needs_human",
+      "reason": "reCAPTCHA challenge required after filling form (fire hydrant image selection)",
+      "artifactPath": "bot/sandbox/workspace/applications/careers-h2o-Y4XkgBiojT/"
+    },
+    {
+      "jobId": "gh-databricks-8629999002",
+      "company": "Databricks",
+      "title": "Senior Forward Deployed Engineer",
+      "source": "greenhouse",
+      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8629999002",
+      "status": "pending_local",
+      "reason": "Next local Greenhouse apply",
+      "artifactPath": "bot/sandbox/workspace/applications/gh-databricks-8629999002/"
+    },
+    {
+      "jobId": "gh-databricks-8878946002",
+      "company": "Databricks",
+      "title": "Evergreen - AI Engineer, AI FDE",
+      "source": "greenhouse",
+      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8878946002",
+      "status": "pending_local",
+      "reason": "Artifacts ready; local apply",
+      "artifactPath": "bot/sandbox/workspace/applications/gh-databricks-8878946002/"
+    },
+    {
+      "jobId": "lever-resilinc-98e013c3",
+      "company": "Resilinc",
+      "title": "Senior Data Engineer",
+      "source": "lever",
+      "url": "https://jobs.lever.co/resilinc/98e013c3-84ff-4596-8712-6401c0fb3d55",
+      "status": "needs_human",
+      "reason": "hCaptcha challenge blocked submit after form fill + resume upload",
+      "artifactPath": "bot/sandbox/workspace/applications/lever-resilinc-98e013c3/"
+    },
+    {
+      "jobId": "ashby-notion-79c18580",
+      "company": "Notion",
+      "title": "Forward Deployed Engineer, India",
+      "source": "ashby",
+      "url": "https://jobs.ashbyhq.com/notion/79c18580-c927-456c-9d5f-72efbc6c43cb",
+      "status": "needs_human",
+      "reason": "reCAPTCHA Enterprise challenge after full form fill + resume upload + submit click",
+      "artifactPath": "bot/sandbox/workspace/applications/ashby-notion-79c18580/"
+    },
+    {
+      "jobId": "careers-h2o-yORWImeLx6",
+      "company": "H2O.ai",
+      "title": "AI Engineer - Forward Deployed",
+      "source": "careers",
+      "url": "https://h2oai.applytojob.com/apply/yORWImeLx6/AI-Engineer-Forward-Deployed",
+      "status": "blocked",
+      "reason": "Job posting closed - 'This position is no longer available'",
+      "artifactPath": "bot/sandbox/workspace/applications/careers-h2o-yORWImeLx6/"
+    },
+    {
+      "jobId": "ashby-cursor-166c3951",
+      "company": "Cursor",
+      "title": "Forward Deployed Engineer - India",
+      "source": "ashby",
+      "url": "https://jobs.ashbyhq.com/cursor/166c3951-1d2a-4e61-b79b-bedefe96073b",
+      "status": "pending_local",
+      "reason": "Artifacts ready; local apply",
+      "artifactPath": "bot/sandbox/workspace/applications/ashby-cursor-166c3951/"
+    },
+    {
+      "jobId": "lever-outreach-16657196",
+      "company": "Outreach",
+      "title": "Senior Forward Deployed Engineer, Managed Services",
+      "source": "lever",
+      "url": "https://jobs.lever.co/outreach/16657196-aa36-4b6c-9349-ff052cca047a",
+      "status": "pending_local",
+      "reason": "Form fields filled locally; resume upload blocked by MCP upload_file ACL",
+      "artifactPath": "bot/sandbox/workspace/applications/lever-outreach-16657196/"
+    },
+    {
+      "jobId": "gh-gleanwork-4739975005",
+      "company": "Glean",
+      "title": "Senior Data Engineer, Internal Data Platform & Analytics",
+      "source": "greenhouse",
+      "url": "https://job-boards.greenhouse.io/gleanwork/jobs/4739975005",
+      "status": "needs_human",
+      "reason": "reCAPTCHA blocked submit; Submit button disabled after click; form filled + resume uploaded",
+      "artifactPath": "bot/sandbox/workspace/applications/gh-gleanwork-4739975005/"
+    },
+    {
+      "jobId": "gh-arcana-4169688009",
+      "company": "Arcana",
+      "title": "Senior AI Engineer — Inference & Agent Systems",
+      "source": "greenhouse",
+      "url": "https://job-boards.greenhouse.io/arcanaanalytics/jobs/4169688009",
+      "status": "pending_local",
+      "reason": "Artifacts ready; local apply",
+      "artifactPath": "bot/sandbox/workspace/applications/gh-arcana-4169688009/"
+    },
+    {
+      "jobId": "gh-databricks-7845325002",
+      "company": "Databricks",
+      "title": "Senior ML & AI Technical Solutions Engineer",
+      "source": "greenhouse",
+      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=7845325002",
+      "status": "pending_local",
+      "reason": "Artifacts ready; local apply",
+      "artifactPath": "bot/sandbox/workspace/applications/gh-databricks-7845325002/"
+    },
+    {
+      "jobId": "gh-databricks-8585164002",
+      "company": "Databricks",
+      "title": "Specialist Solutions Architect - AI/ML",
+      "source": "greenhouse",
+      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8585164002",
+      "status": "pending_local",
+      "reason": "Artifacts ready; local apply",
+      "artifactPath": "bot/sandbox/workspace/applications/gh-databricks-8585164002/"
+    },
+    {
+      "jobId": "gh-karat-8880766002",
+      "company": "Karat",
+      "title": "Senior Data Engineer (India)",
+      "source": "greenhouse",
+      "url": "https://job-boards.greenhouse.io/karat/jobs/8880766002",
+      "status": "needs_human",
+      "reason": "Email verification code required - sent to durgesh.majeti.007@gmail.com",
+      "artifactPath": "bot/sandbox/workspace/applications/gh-karat-8880766002/"
+    },
+    {
+      "jobId": "careers-atlassian-27230",
+      "company": "Atlassian",
+      "title": "Senior Data Platform Engineer",
+      "source": "careers",
+      "url": "https://www.atlassian.com/company/careers/details/27230",
+      "status": "pending_local",
+      "reason": "Artifacts ready; local apply",
+      "artifactPath": "bot/sandbox/workspace/applications/careers-atlassian-27230/"
+    },
+    {
+      "jobId": "ashby-openai-4c078f82",
+      "company": "OpenAI",
+      "title": "Forward Deployed Engineer - Singapore",
+      "source": "ashby",
+      "url": "https://jobs.ashbyhq.com/openai/4c078f82-93b9-427c-8fd8-95de198884b4",
+      "status": "pending_local",
+      "reason": "Artifacts ready; local apply",
+      "artifactPath": "bot/sandbox/workspace/applications/ashby-openai-4c078f82/"
+    },
+    {
+      "jobId": "gh-databricks-8530855002",
+      "company": "Databricks",
+      "title": "Staff Forward Deployed Engineer",
+      "source": "greenhouse",
+      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8530855002",
+      "status": "pending_local",
+      "reason": "Artifacts ready; local apply",
+      "artifactPath": "bot/sandbox/workspace/applications/gh-databricks-8530855002/"
+    },
+    {
+      "jobId": "ashby-openai-8acfba11",
+      "company": "OpenAI",
+      "title": "Applied AI Engineer",
+      "source": "ashby",
+      "url": "https://jobs.ashbyhq.com/openai/8acfba11-707e-4d8e-a860-88643fae24ba",
+      "status": "pending_local",
+      "reason": "Artifacts ready; local apply",
+      "artifactPath": "bot/sandbox/workspace/applications/ashby-openai-8acfba11/"
+    },
+    {
+      "jobId": "ashby-cursor-32350e7d",
+      "company": "Cursor",
+      "title": "Solutions Architect - India",
+      "source": "ashby",
+      "url": "https://jobs.ashbyhq.com/cursor/32350e7d-b6c8-4556-b8ba-3e58490f7cb7",
+      "status": "pending_local",
+      "reason": "Artifacts ready; local apply",
+      "artifactPath": "bot/sandbox/workspace/applications/ashby-cursor-32350e7d/"
+    },
+    {
+      "jobId": "gh-gleanwork-4747460005",
+      "company": "Glean",
+      "title": "Solutions Engineer (EMEA Shift)",
+      "source": "greenhouse",
+      "url": "https://job-boards.greenhouse.io/gleanwork/jobs/4747460005",
+      "status": "pending_local",
+      "reason": "Artifacts ready; local apply",
+      "artifactPath": "bot/sandbox/workspace/applications/gh-gleanwork-4747460005/"
+    }
+  ]
+}

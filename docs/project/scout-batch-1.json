@@ -1,0 +1,243 @@
+{
+  "batch": "scout-batch-1",
+  "scoutedAt": "2026-11-05T06:05:00Z",
+  "profileCommit": "c17ac1128f18c0b5cdbdd9cdfd08971466036b27",
+  "applicationName": "Durgesh Majeti",
+  "targetRoles": [
+    "Senior AI Engineer",
+    "Senior Data Engineer",
+    "Forward Deployed Engineer"
+  ],
+  "targetLocations": [
+    "Remote",
+    "Hyderabad",
+    "Bangalore",
+    "Relocation-supported countries"
+  ],
+  "threshold": 70,
+  "loopcv": "skipped_not_configured",
+  "applied": false,
+  "count": 22,
+  "jobs": [
+    {
+      "id": "gh-databricks-8876680002",
+      "fitScore": 94,
+      "title": "Senior Forward Deployed Engineer, Sr FDE (L5)",
+      "company": "Databricks",
+      "location": "Remote - India",
+      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8876680002",
+      "source": "greenhouse",
+      "fitNotes": "Exact FDE + Remote India; Databricks/Spark stack is current day job."
+    },
+    {
+      "id": "careers-h2o-Y4XkgBiojT",
+      "fitScore": 93,
+      "title": "Senior AI Engineer",
+      "company": "H2O.ai",
+      "location": "India (remote-friendly)",
+      "url": "https://h2oai.applytojob.com/apply/Y4XkgBiojT/Senior-AI-Engineer",
+      "source": "careers",
+      "fitNotes": "Priority Senior AI title; RAG/agentic/customer-facing FDE-style delivery."
+    },
+    {
+      "id": "gh-databricks-8629999002",
+      "fitScore": 92,
+      "title": "Senior Forward Deployed Engineer",
+      "company": "Databricks",
+      "location": "Bengaluru, India",
+      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8629999002",
+      "source": "greenhouse",
+      "fitNotes": "Target FDE title + Bangalore; lakehouse domain match."
+    },
+    {
+      "id": "gh-databricks-8878946002",
+      "fitScore": 91,
+      "title": "Evergreen - AI Engineer, AI FDE",
+      "company": "Databricks",
+      "location": "Bengaluru, India",
+      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8878946002",
+      "source": "greenhouse",
+      "fitNotes": "AI FDE + GenAI/RAG preferred; Databricks platform experience is a plus."
+    },
+    {
+      "id": "lever-resilinc-98e013c3",
+      "fitScore": 91,
+      "title": "Senior Data Engineer",
+      "company": "Resilinc",
+      "location": "India (fully remote)",
+      "url": "https://jobs.lever.co/resilinc/98e013c3-84ff-4596-8712-6401c0fb3d55",
+      "source": "lever",
+      "fitNotes": "Senior DE + Databricks/Spark/Azure/Python; customer-facing FDE-adjacent."
+    },
+    {
+      "id": "ashby-notion-79c18580",
+      "fitScore": 90,
+      "title": "Forward Deployed Engineer, India",
+      "company": "Notion",
+      "location": "Hyderabad, India (hybrid)",
+      "url": "https://jobs.ashbyhq.com/notion/79c18580-c927-456c-9d5f-72efbc6c43cb",
+      "source": "ashby",
+      "fitNotes": "Hyderabad FDE; migrations/data/Python/SQL map to DE background."
+    },
+    {
+      "id": "careers-h2o-yORWImeLx6",
+      "fitScore": 88,
+      "title": "AI Engineer - Forward Deployed",
+      "company": "H2O.ai",
+      "location": "India",
+      "url": "https://h2oai.applytojob.com/apply/yORWImeLx6/AI-Engineer-Forward-Deployed",
+      "source": "careers",
+      "fitNotes": "Mid/senior FDE AI; RAG/agents + cloud deploy; slightly junior framing vs Sr AI."
+    },
+    {
+      "id": "ashby-cursor-166c3951",
+      "fitScore": 87,
+      "title": "Forward Deployed Engineer - India",
+      "company": "Cursor",
+      "location": "Bengaluru / Delhi / Mumbai",
+      "url": "https://jobs.ashbyhq.com/cursor/166c3951-1d2a-4e61-b79b-bedefe96073b",
+      "source": "ashby",
+      "fitNotes": "India FDE; AI production workflows; Python-heavy customer embed."
+    },
+    {
+      "id": "lever-outreach-16657196",
+      "fitScore": 86,
+      "title": "Senior Forward Deployed Engineer, Managed Services",
+      "company": "Outreach",
+      "location": "Hyderabad (remote)",
+      "url": "https://jobs.lever.co/outreach/16657196-aa36-4b6c-9349-ff052cca047a",
+      "source": "lever",
+      "fitNotes": "Hyderabad remote FDE + AI agents; note US-hours / night-shift expectation."
+    },
+    {
+      "id": "gh-gleanwork-4739975005",
+      "fitScore": 85,
+      "title": "Senior Data Engineer, Internal Data Platform & Analytics",
+      "company": "Glean",
+      "location": "Bangalore, India",
+      "url": "https://job-boards.greenhouse.io/gleanwork/jobs/4739975005",
+      "source": "greenhouse",
+      "fitNotes": "Bangalore Senior DE at AI search company; platform/analytics fit."
+    },
+    {
+      "id": "gh-arcana-4169688009",
+      "fitScore": 84,
+      "title": "Senior AI Engineer \u2014 Inference & Agent Systems",
+      "company": "Arcana",
+      "location": "Bangalore, Hybrid / Remote India",
+      "url": "https://job-boards.greenhouse.io/arcanaanalytics/jobs/4169688009",
+      "source": "greenhouse",
+      "fitNotes": "Senior AI + agents; production inference/eval focus (Go/Temporal stack learnable)."
+    },
+    {
+      "id": "gh-databricks-7845325002",
+      "fitScore": 84,
+      "title": "Senior ML & AI Technical Solutions Engineer",
+      "company": "Databricks",
+      "location": "Bengaluru, India",
+      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=7845325002",
+      "source": "greenhouse",
+      "fitNotes": "Bangalore customer-facing AI/ML solutions on Databricks."
+    },
+    {
+      "id": "gh-databricks-8585164002",
+      "fitScore": 83,
+      "title": "Specialist Solutions Architect - AI/ML",
+      "company": "Databricks",
+      "location": "Bengaluru, India",
+      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8585164002",
+      "source": "greenhouse",
+      "fitNotes": "AI/ML SA in Bangalore; strong platform overlap, more SA than IC engineer."
+    },
+    {
+      "id": "gh-karat-8880766002",
+      "fitScore": 82,
+      "title": "Senior Data Engineer (India)",
+      "company": "Karat",
+      "location": "Remote (Bangalore only)",
+      "url": "https://job-boards.greenhouse.io/karat/jobs/8880766002",
+      "source": "greenhouse",
+      "fitNotes": "Remote Bangalore Senior DE; Python/Airflow/AWS; US-hours overlap required."
+    },
+    {
+      "id": "careers-atlassian-27230",
+      "fitScore": 81,
+      "title": "Senior Data Platform Engineer",
+      "company": "Atlassian",
+      "location": "Bengaluru, India (remote-friendly)",
+      "url": "https://www.atlassian.com/company/careers/details/27230",
+      "source": "careers",
+      "fitNotes": "Bangalore data platform IC; Flink/MPP emphasis \u2014 adjacent to DE lakehouse work."
+    },
+    {
+      "id": "gh-bottomline-8860069002",
+      "fitScore": 80,
+      "title": "Forward-Deployed AI Engineer",
+      "company": "Bottomline",
+      "location": "India (Pune / Bangalore / Remote India)",
+      "url": "https://job-boards.greenhouse.io/bottomlinetechnologies/jobs/8860069002",
+      "source": "greenhouse",
+      "fitNotes": "India FDE AI on Snowflake/Cortex; years bar (~3\u20134) may read junior vs Sr."
+    },
+    {
+      "id": "lever-sws-d3ffbb13",
+      "fitScore": 79,
+      "title": "Senior Data Engineer / Developer (Remote) [HR221]",
+      "company": "Smart Working Solutions",
+      "location": "Remote India (incl. Hyd / BLR)",
+      "url": "https://jobs.lever.co/smart-working-solutions/d3ffbb13-01ad-4a06-8029-db5d911e71c4",
+      "source": "lever",
+      "fitNotes": "Remote India Senior DE; verify client/comp vs 27 LPA+ bar."
+    },
+    {
+      "id": "ashby-openai-4c078f82",
+      "fitScore": 78,
+      "title": "Forward Deployed Engineer - Singapore",
+      "company": "OpenAI",
+      "location": "Singapore (hybrid; relocation offered)",
+      "url": "https://jobs.ashbyhq.com/openai/4c078f82-93b9-427c-8fd8-95de198884b4",
+      "source": "ashby",
+      "fitNotes": "Target FDE + relocation support; 50% travel; stretch bar / competitive."
+    },
+    {
+      "id": "gh-databricks-8530855002",
+      "fitScore": 77,
+      "title": "Staff Forward Deployed Engineer",
+      "company": "Databricks",
+      "location": "Remote - India",
+      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8530855002",
+      "source": "greenhouse",
+      "fitNotes": "Remote India FDE; Staff level is a stretch vs current Sr DE L2."
+    },
+    {
+      "id": "ashby-openai-8acfba11",
+      "fitScore": 76,
+      "title": "Applied AI Engineer",
+      "company": "OpenAI",
+      "location": "Singapore",
+      "url": "https://jobs.ashbyhq.com/openai/8acfba11-707e-4d8e-a860-88643fae24ba",
+      "source": "ashby",
+      "fitNotes": "Applied AI + APAC; relocation path; highly competitive."
+    },
+    {
+      "id": "ashby-cursor-32350e7d",
+      "fitScore": 75,
+      "title": "Solutions Architect - India",
+      "company": "Cursor",
+      "location": "Bengaluru",
+      "url": "https://jobs.ashbyhq.com/cursor/32350e7d-b6c8-4556-b8ba-3e58490f7cb7",
+      "source": "ashby",
+      "fitNotes": "Bangalore solutions role adjacent to FDE; more SA than builder."
+    },
+    {
+      "id": "gh-gleanwork-4747460005",
+      "fitScore": 74,
+      "title": "Solutions Engineer (EMEA Shift)",
+      "company": "Glean",
+      "location": "Bangalore, India",
+      "url": "https://job-boards.greenhouse.io/gleanwork/jobs/4747460005",
+      "source": "greenhouse",
+      "fitNotes": "Bangalore SE with EMEA shift; AI product adjacency, less IC engineering."
+    }
+  ]
+}
