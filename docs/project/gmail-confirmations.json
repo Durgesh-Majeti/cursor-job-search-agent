@@ -1,0 +1,7 @@
+{
+  "updatedAt": null,
+  "connected": false,
+  "source": "stub",
+  "note": "Populate via POST /api/gmail/sync with confirmation rows, or later via Gmail MCP (gmail.readonly) on the self-hosted worker. See docs/project/gmail-mcp-setup.md.",
+  "confirmations": []
+}

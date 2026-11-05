@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
  * Local dashboard API + static server.
- * Reads docs/project/*.json and workspace application artifacts.
- * Approve writes docs/project/approvals.json for the agent to read.
+ * Resume upload/analyse, platform search stubs, job inbox, apply queue,
+ * skip/block, Gmail confirmation sync stub.
  * Local-only — do not deploy.
  */
 import http from "node:http";
@@ -14,7 +14,9 @@ import { spawn } from "node:child_process";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "../..");
 const PROJECT_DIR = path.join(REPO_ROOT, "docs/project");
-const APPS_DIR = path.join(REPO_ROOT, "bot/sandbox/workspace/applications");
+const WORKSPACE_DIR = path.join(REPO_ROOT, "bot/sandbox/workspace");
+const APPS_DIR = path.join(WORKSPACE_DIR, "applications");
+const UPLOADS_DIR = path.join(WORKSPACE_DIR, "uploads");
 const DIST_DIR = path.join(__dirname, "dist");
 
 const API_PORT = Number(process.env.DASHBOARD_API_PORT || 8787);
@@ -23,10 +25,19 @@ const DEV = process.argv.includes("--dev");
 const DISPLAY_STATUSES = [
   "pending",
   "approved",
+  "queued",
   "applied",
   "blocked",
   "needs_human",
+  "skipped",
 ];
+
+const PLATFORM_SOURCES = {
+  linkedin: ["linkedin"],
+  indeed: ["indeed"],
+  greenhouse: ["greenhouse", "lever", "ashby", "careers", "workday", "company"],
+  loopcv: ["loopcv"],
+};
 
 async function readJson(file, fallback = null) {
   try {
@@ -43,17 +54,30 @@ async function writeJson(file, data) {
   await fs.writeFile(file, `${JSON.stringify(data, null, 2)}\n`, "utf8");
 }
 
+function httpError(status, message) {
+  const err = new Error(message);
+  err.status = status;
+  return err;
+}
+
 function normalizeStatus(raw) {
   if (!raw) return null;
   const s = String(raw).toLowerCase();
-  if (s === "pending_local" || s === "draft" || s === "ready_to_apply" || s === "tailoring" || s === "applying") {
+  if (
+    s === "pending_local" ||
+    s === "draft" ||
+    s === "ready_to_apply" ||
+    s === "tailoring" ||
+    s === "applying"
+  ) {
     return "pending";
   }
   if (s === "approved") return "approved";
+  if (s === "queued" || s === "in_progress") return "queued";
   if (s === "applied") return "applied";
   if (s === "blocked") return "blocked";
   if (s === "needs_human") return "needs_human";
-  if (s === "skipped" || s === "withdrawn") return "pending";
+  if (s === "skipped" || s === "withdrawn") return "skipped";
   return null;
 }
 
@@ -91,13 +115,24 @@ async function loadWorkspaceApps() {
 }
 
 async function loadApplyStatus() {
-  // Prefer the committed batch twin; fall back to a short alias if present.
   const primary = path.join(PROJECT_DIR, "apply-status-batch-1.json");
   const alias = path.join(PROJECT_DIR, "apply-status.json");
   const fromPrimary = await readJson(primary, null);
   if (fromPrimary) return { data: fromPrimary, file: primary };
   const fromAlias = await readJson(alias, { jobs: [], counts: {} });
   return { data: fromAlias, file: alias };
+}
+
+async function loadApplyQueue() {
+  const file = path.join(PROJECT_DIR, "apply-queue.json");
+  const data = await readJson(file, { updatedAt: null, queue: [] });
+  return { file, data };
+}
+
+async function loadDecisions() {
+  const file = path.join(PROJECT_DIR, "job-decisions.json");
+  const data = await readJson(file, { updatedAt: null, decisions: [] });
+  return { file, data };
 }
 
 async function buildJobs() {
@@ -108,7 +143,10 @@ async function buildJobs() {
   const approvalsDoc = await readJson(path.join(PROJECT_DIR, "approvals.json"), {
     approvals: [],
   });
+  const { data: queueDoc, file: queueFile } = await loadApplyQueue();
+  const { data: decisionsDoc, file: decisionsFile } = await loadDecisions();
   const workspace = await loadWorkspaceApps();
+  const searchReq = await readJson(path.join(PROJECT_DIR, "search-request.json"), null);
 
   const approvalById = new Map();
   for (const a of approvalsDoc.approvals || []) {
@@ -118,6 +156,16 @@ async function buildJobs() {
   const applyById = new Map();
   for (const j of applyStatus.jobs || []) {
     if (j?.jobId) applyById.set(j.jobId, j);
+  }
+
+  const queueById = new Map();
+  for (const q of queueDoc.queue || []) {
+    if (q?.jobId) queueById.set(q.jobId, q);
+  }
+
+  const decisionById = new Map();
+  for (const d of decisionsDoc.decisions || []) {
+    if (d?.jobId) decisionById.set(d.jobId, d);
   }
 
   const jobsMap = new Map();
@@ -138,6 +186,7 @@ async function buildJobs() {
       evidence: null,
       artifactPath: null,
       statusSource: "scout",
+      queueStatus: null,
     });
   }
 
@@ -156,6 +205,7 @@ async function buildJobs() {
       evidence: null,
       artifactPath: w.artifactPath,
       statusSource: "workspace",
+      queueStatus: null,
     };
     existing.title = existing.title || w.title;
     existing.company = existing.company || w.company;
@@ -169,7 +219,6 @@ async function buildJobs() {
       existing.evidence = w.evidence;
       existing.statusSource = "workspace-status";
     } else if (w.metaStatus && existing.status === "pending") {
-      // ready_to_apply / draft stay pending until apply-status or approval
       existing.status = w.metaStatus === "approved" ? "approved" : "pending";
       existing.statusSource = "workspace-meta";
     }
@@ -191,6 +240,7 @@ async function buildJobs() {
       evidence: null,
       artifactPath: a.artifactPath ?? null,
       statusSource: "apply-status",
+      queueStatus: null,
     };
     existing.title = existing.title || a.title;
     existing.company = existing.company || a.company;
@@ -207,7 +257,6 @@ async function buildJobs() {
     jobsMap.set(jobId, existing);
   }
 
-  // Approvals only promote pending → approved; never invent applied/blocked.
   for (const [jobId, a] of approvalById) {
     const existing = jobsMap.get(jobId);
     if (!existing) continue;
@@ -216,12 +265,64 @@ async function buildJobs() {
       existing.reason = a.note || "Approved via dashboard";
       existing.approvedAt = a.approvedAt ?? null;
       existing.statusSource = "approvals";
-    } else if (existing.status === "approved") {
+    } else if (existing.status === "approved" || existing.status === "queued") {
       existing.approvedAt = a.approvedAt ?? existing.approvedAt ?? null;
     }
   }
 
-  const jobs = [...jobsMap.values()].sort((x, y) => {
+  for (const [jobId, q] of queueById) {
+    const existing = jobsMap.get(jobId);
+    if (!existing) continue;
+    existing.queueStatus = q.status || "queued";
+    existing.queuedAt = q.queuedAt ?? null;
+    if (
+      existing.status === "pending" ||
+      existing.status === "approved" ||
+      existing.status === "queued"
+    ) {
+      const qs = normalizeStatus(q.status) || "queued";
+      if (qs === "queued") {
+        existing.status = "queued";
+        existing.reason =
+          q.note ||
+          "Queued for Chrome apply on self-hosted worker (docs/project/apply-queue.json)";
+        existing.statusSource = "apply-queue";
+      }
+    }
+  }
+
+  for (const [jobId, d] of decisionById) {
+    const existing = jobsMap.get(jobId);
+    if (!existing) continue;
+    const action = String(d.action || "").toLowerCase();
+    if (action === "skipped" || action === "blocked") {
+      if (
+        existing.status === "pending" ||
+        existing.status === "approved" ||
+        existing.status === "queued" ||
+        existing.status === "skipped"
+      ) {
+        existing.status = action === "blocked" ? "blocked" : "skipped";
+        existing.reason = d.note || (action === "blocked" ? "Blocked via dashboard" : "Skipped via dashboard");
+        existing.statusSource = "job-decisions";
+      }
+    }
+  }
+
+  let jobs = [...jobsMap.values()];
+
+  const activePlatforms = Array.isArray(searchReq?.platforms) ? searchReq.platforms : [];
+  if (activePlatforms.length > 0 && searchReq?.filterActive) {
+    const allowed = new Set();
+    for (const p of activePlatforms) {
+      for (const src of PLATFORM_SOURCES[p] || []) allowed.add(src);
+    }
+    if (allowed.size > 0) {
+      jobs = jobs.filter((j) => allowed.has(String(j.source || "").toLowerCase()));
+    }
+  }
+
+  jobs.sort((x, y) => {
     const fs = (y.fitScore ?? -1) - (x.fitScore ?? -1);
     if (fs !== 0) return fs;
     return String(x.company).localeCompare(String(y.company));
@@ -240,53 +341,481 @@ async function buildJobs() {
       scout: path.relative(REPO_ROOT, path.join(PROJECT_DIR, "scout-batch-1.json")),
       applyStatus: path.relative(REPO_ROOT, applyStatusFile),
       approvals: path.relative(REPO_ROOT, path.join(PROJECT_DIR, "approvals.json")),
+      applyQueue: path.relative(REPO_ROOT, queueFile),
+      decisions: path.relative(REPO_ROOT, decisionsFile),
       workspace: "bot/sandbox/workspace/applications/",
     },
+    search: searchReq
+      ? {
+          platforms: searchReq.platforms || [],
+          status: searchReq.status || "idle",
+          updatedAt: searchReq.updatedAt || null,
+          note: searchReq.note || null,
+          resultCount: searchReq.resultCount ?? null,
+        }
+      : null,
     counts,
     jobs,
   };
 }
 
-async function approveJob(jobId, note) {
-  if (!jobId || typeof jobId !== "string") {
-    const err = new Error("jobId required");
-    err.status = 400;
-    throw err;
-  }
-
-  const snapshot = await buildJobs();
-  const job = snapshot.jobs.find((j) => j.id === jobId);
-  if (!job) {
-    const err = new Error(`Unknown jobId: ${jobId}`);
-    err.status = 404;
-    throw err;
-  }
-  if (job.status === "applied" || job.status === "blocked" || job.status === "needs_human") {
-    const err = new Error(
-      `Cannot approve job in status "${job.status}" — status comes from apply evidence, not the dashboard.`,
-    );
-    err.status = 409;
-    throw err;
-  }
-
+async function writeApproval(job, note) {
   const file = path.join(PROJECT_DIR, "approvals.json");
   const doc = await readJson(file, { updatedAt: null, approvals: [] });
   const now = new Date().toISOString();
-  const existingIdx = (doc.approvals || []).findIndex((a) => a.jobId === jobId);
   const entry = {
-    jobId,
+    jobId: job.id,
     status: "approved",
     approvedAt: now,
     company: job.company,
     title: job.title,
     url: job.url,
-    note: note || "Approved via dashboard",
+    note: note || "Approved via dashboard Apply",
   };
-  if (existingIdx >= 0) doc.approvals[existingIdx] = entry;
+  const idx = (doc.approvals || []).findIndex((a) => a.jobId === job.id);
+  if (idx >= 0) doc.approvals[idx] = entry;
   else doc.approvals.push(entry);
   doc.updatedAt = now;
   await writeJson(file, doc);
-  return { saved: true, approval: entry, jobs: await buildJobs() };
+  return entry;
+}
+
+async function approveJob(jobId, note) {
+  if (!jobId || typeof jobId !== "string") throw httpError(400, "jobId required");
+  const snapshot = await buildJobs();
+  const job = snapshot.jobs.find((j) => j.id === jobId);
+  if (!job) throw httpError(404, `Unknown jobId: ${jobId}`);
+  if (["applied", "blocked", "needs_human", "skipped"].includes(job.status)) {
+    throw httpError(
+      409,
+      `Cannot approve job in status "${job.status}" — status comes from apply evidence or decisions.`,
+    );
+  }
+  const approval = await writeApproval(job, note || "Approved via dashboard");
+  return { saved: true, approval, jobs: await buildJobs() };
+}
+
+async function applyJob(jobId, note) {
+  if (!jobId || typeof jobId !== "string") throw httpError(400, "jobId required");
+  const snapshot = await buildJobs();
+  const job = snapshot.jobs.find((j) => j.id === jobId);
+  if (!job) throw httpError(404, `Unknown jobId: ${jobId}`);
+  if (["applied", "blocked", "needs_human", "skipped"].includes(job.status)) {
+    throw httpError(409, `Cannot queue apply for status "${job.status}"`);
+  }
+
+  const approval = await writeApproval(
+    job,
+    note || "Apply requested via dashboard — worker should submit with Chrome",
+  );
+
+  const { file, data } = await loadApplyQueue();
+  const now = new Date().toISOString();
+  const entry = {
+    jobId: job.id,
+    queuedAt: now,
+    status: "queued",
+    company: job.company,
+    title: job.title,
+    url: job.url,
+    source: job.source,
+    fitScore: job.fitScore,
+    note:
+      note ||
+      "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+  };
+  const queue = Array.isArray(data.queue) ? data.queue : [];
+  const idx = queue.findIndex((q) => q.jobId === job.id);
+  if (idx >= 0) queue[idx] = { ...queue[idx], ...entry };
+  else queue.push(entry);
+  data.queue = queue;
+  data.updatedAt = now;
+  data.note =
+    "Agent/self-hosted worker watches this queue. Apply from the dashboard enqueues a job; Chrome DevTools MCP on the worker performs the browser apply.";
+  await writeJson(file, data);
+
+  // Clear skip/block if re-applying
+  const decisions = await loadDecisions();
+  const filtered = (decisions.data.decisions || []).filter((d) => d.jobId !== job.id);
+  if (filtered.length !== (decisions.data.decisions || []).length) {
+    decisions.data.decisions = filtered;
+    decisions.data.updatedAt = now;
+    await writeJson(decisions.file, decisions.data);
+  }
+
+  return {
+    saved: true,
+    approval,
+    queueEntry: entry,
+    message:
+      "Queued for Chrome apply on the self-hosted worker (docs/project/apply-queue.json).",
+    jobs: await buildJobs(),
+  };
+}
+
+async function decideJob(jobId, action, note) {
+  if (!jobId || typeof jobId !== "string") throw httpError(400, "jobId required");
+  if (!["skipped", "blocked"].includes(action)) {
+    throw httpError(400, 'action must be "skipped" or "blocked"');
+  }
+  const snapshot = await buildJobs();
+  const job = snapshot.jobs.find((j) => j.id === jobId);
+  if (!job) throw httpError(404, `Unknown jobId: ${jobId}`);
+  if (["applied", "needs_human"].includes(job.status) && action === "skipped") {
+    throw httpError(409, `Cannot skip job in status "${job.status}"`);
+  }
+
+  const { file, data } = await loadDecisions();
+  const now = new Date().toISOString();
+  const entry = {
+    jobId,
+    action,
+    at: now,
+    company: job.company,
+    title: job.title,
+    note: note || (action === "blocked" ? "Blocked via dashboard" : "Skipped via dashboard"),
+  };
+  const decisions = Array.isArray(data.decisions) ? data.decisions : [];
+  const idx = decisions.findIndex((d) => d.jobId === jobId);
+  if (idx >= 0) decisions[idx] = entry;
+  else decisions.push(entry);
+  data.decisions = decisions;
+  data.updatedAt = now;
+  await writeJson(file, data);
+
+  // Drop from apply queue if present
+  const queue = await loadApplyQueue();
+  const before = (queue.data.queue || []).length;
+  queue.data.queue = (queue.data.queue || []).filter((q) => q.jobId !== jobId);
+  if (queue.data.queue.length !== before) {
+    queue.data.updatedAt = now;
+    await writeJson(queue.file, queue.data);
+  }
+
+  return { saved: true, decision: entry, jobs: await buildJobs() };
+}
+
+async function resumeInfo() {
+  const candidates = [
+    { path: path.join(UPLOADS_DIR, "resume-latest.md"), kind: "upload-md" },
+    { path: path.join(UPLOADS_DIR, "resume-latest.pdf"), kind: "upload-pdf" },
+    { path: path.join(UPLOADS_DIR, "resume-latest.txt"), kind: "upload-txt" },
+    { path: path.join(WORKSPACE_DIR, "resume.md"), kind: "workspace-md" },
+    { path: path.join(WORKSPACE_DIR, "resume.pdf"), kind: "workspace-pdf" },
+  ];
+  let current = null;
+  for (const c of candidates) {
+    try {
+      const st = await fs.stat(c.path);
+      current = {
+        path: path.relative(REPO_ROOT, c.path),
+        kind: c.kind,
+        bytes: st.size,
+        mtime: st.mtime.toISOString(),
+      };
+      break;
+    } catch {
+      /* try next */
+    }
+  }
+  const analysis = await readJson(path.join(PROJECT_DIR, "resume-analysis.json"), null);
+  return { current, analysis };
+}
+
+function decodeBase64Payload(contentBase64) {
+  const cleaned = String(contentBase64 || "").replace(/^data:[^;]+;base64,/, "");
+  return Buffer.from(cleaned, "base64");
+}
+
+async function uploadResume(body) {
+  const filename = String(body.filename || "resume.bin");
+  const ext = path.extname(filename).toLowerCase() || ".bin";
+  if (![".pdf", ".md", ".txt", ".markdown"].includes(ext)) {
+    throw httpError(400, "Supported resume types: .pdf, .md, .txt");
+  }
+  if (!body.contentBase64 && !body.text) {
+    throw httpError(400, "Provide contentBase64 or text");
+  }
+
+  await fs.mkdir(UPLOADS_DIR, { recursive: true });
+  const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const savedName = `resume-${stamp}${ext === ".markdown" ? ".md" : ext}`;
+  const savedPath = path.join(UPLOADS_DIR, savedName);
+
+  if (body.text != null) {
+    await fs.writeFile(savedPath, String(body.text), "utf8");
+  } else {
+    await fs.writeFile(savedPath, decodeBase64Payload(body.contentBase64));
+  }
+
+  const latestExt = ext === ".markdown" ? ".md" : ext;
+  const latestPath = path.join(UPLOADS_DIR, `resume-latest${latestExt}`);
+  await fs.copyFile(savedPath, latestPath);
+
+  // Keep text sibling for PDF uploads when text provided
+  if (ext === ".pdf" && body.text) {
+    await fs.writeFile(path.join(UPLOADS_DIR, "resume-latest.md"), String(body.text), "utf8");
+  }
+
+  return {
+    saved: true,
+    path: path.relative(REPO_ROOT, savedPath),
+    latest: path.relative(REPO_ROOT, latestPath),
+    resume: await resumeInfo(),
+  };
+}
+
+async function readResumeText() {
+  const mdCandidates = [
+    path.join(UPLOADS_DIR, "resume-latest.md"),
+    path.join(UPLOADS_DIR, "resume-latest.txt"),
+    path.join(WORKSPACE_DIR, "resume.md"),
+  ];
+  for (const p of mdCandidates) {
+    try {
+      return { text: await fs.readFile(p, "utf8"), path: path.relative(REPO_ROOT, p) };
+    } catch {
+      /* next */
+    }
+  }
+  // PDF present but no extract — still analyse profile.json hints
+  return { text: "", path: null };
+}
+
+function analyseResumeText(text, profile) {
+  const lower = text.toLowerCase();
+  const targetRoles = profile?.targetRoles || [
+    "Senior AI Engineer",
+    "Senior Data Engineer",
+    "Forward Deployed Engineer",
+  ];
+  const keywordGroups = {
+    data_engineering: ["databricks", "spark", "pyspark", "etl", "elt", "airflow", "delta lake"],
+    cloud: ["azure", "aws", "gcp", "s3", "adf", "glue", "lambda"],
+    ai: ["gen ai", "generative", "rag", "llm", "agent", "mcp", "prompt"],
+    languages: ["python", "sql", "scala", "typescript"],
+    soft_ats: ["remote", "hyderabad", "bangalore", "bengaluru"],
+  };
+
+  const hits = {};
+  let hitCount = 0;
+  for (const [group, words] of Object.entries(keywordGroups)) {
+    const found = words.filter((w) => lower.includes(w));
+    hits[group] = found;
+    hitCount += found.length;
+  }
+
+  const hasEmail = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(text);
+  const hasPhone = /(\+?\d[\d\s()-]{8,}\d)/.test(text);
+  const hasLinkedIn = /linkedin\.com/i.test(text);
+  const hasMetrics = /\d+%|\d+\+?\s*(years?|yrs?)/i.test(text);
+  const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+
+  const strengths = [];
+  const gaps = [];
+  const suggestions = [];
+
+  if (hitCount >= 8) strengths.push("Strong coverage of data/AI/cloud keywords for ATS.");
+  else if (hitCount >= 4) strengths.push("Partial keyword coverage for target roles.");
+  else gaps.push("Few target-role keywords detected — expand skills / tools section.");
+
+  if (hits.ai?.length) strengths.push(`AI/GenAI signals: ${hits.ai.slice(0, 4).join(", ")}.`);
+  else gaps.push("Limited GenAI / RAG / agent keywords for Senior AI / FDE titles.");
+
+  if (hits.data_engineering?.length) {
+    strengths.push(`Data engineering stack present: ${hits.data_engineering.slice(0, 4).join(", ")}.`);
+  }
+
+  if (hasEmail && hasPhone) strengths.push("Contact block includes email and phone.");
+  else gaps.push("Missing or incomplete contact details (email/phone).");
+
+  if (hasLinkedIn) strengths.push("LinkedIn URL present.");
+  else suggestions.push("Add a LinkedIn URL near the header for recruiter lookup.");
+
+  if (hasMetrics) strengths.push("Includes quantified impact or tenure metrics.");
+  else suggestions.push("Add 2–3 quantified outcomes (%, latency, scale) from real work only.");
+
+  if (wordCount > 0 && wordCount < 250) {
+    gaps.push(`Resume text is short (${wordCount} words) — may under-represent experience.`);
+  } else if (wordCount > 900) {
+    suggestions.push("Consider trimming to ~1–2 pages for ATS readability.");
+  }
+
+  if (!text.trim()) {
+    gaps.push("No extractable text found (PDF-only upload). Paste markdown or upload .md/.txt for richer analysis.");
+  }
+
+  const roleFit = targetRoles.map((role) => {
+    const tokens = role.toLowerCase().split(/\s+/).filter((t) => t.length > 2);
+    const matched = tokens.filter((t) => lower.includes(t));
+    const score = Math.round((matched.length / Math.max(tokens.length, 1)) * 100);
+    return { role, score, matched };
+  });
+
+  let score = 40;
+  score += Math.min(25, hitCount * 2);
+  if (hasEmail) score += 5;
+  if (hasPhone) score += 5;
+  if (hasLinkedIn) score += 5;
+  if (hasMetrics) score += 10;
+  if (wordCount >= 300 && wordCount <= 900) score += 10;
+  score = Math.max(0, Math.min(100, score));
+
+  return {
+    analysedAt: new Date().toISOString(),
+    sourcePath: null,
+    wordCount,
+    score,
+    applicationName: profile?.fullName || "Durgesh Majeti",
+    targetRoles,
+    keywordHits: hits,
+    roleFit,
+    strengths,
+    gaps,
+    suggestions,
+    method: "local_heuristics_v1",
+    note: "Heuristic only — optional agent/LLM pass can refine later. Never invent employers, dates, or metrics.",
+  };
+}
+
+async function analyseResume() {
+  const profile = await readJson(path.join(WORKSPACE_DIR, "profile.json"), {});
+  const { text, path: sourcePath } = await readResumeText();
+  const analysis = analyseResumeText(text, profile);
+  analysis.sourcePath = sourcePath;
+  const out = path.join(PROJECT_DIR, "resume-analysis.json");
+  await writeJson(out, analysis);
+  return { saved: true, path: path.relative(REPO_ROOT, out), analysis };
+}
+
+async function searchJobs(body) {
+  const platforms = Array.isArray(body.platforms) ? body.platforms : [];
+  const allowed = new Set(Object.keys(PLATFORM_SOURCES));
+  const selected = platforms.filter((p) => allowed.has(p));
+  if (!selected.length) throw httpError(400, "Select at least one platform");
+
+  const scout = await readJson(path.join(PROJECT_DIR, "scout-batch-1.json"), { jobs: [] });
+  const allowedSources = new Set();
+  for (const p of selected) {
+    for (const s of PLATFORM_SOURCES[p]) allowedSources.add(s);
+  }
+
+  const matched = (scout.jobs || []).filter((j) =>
+    allowedSources.has(String(j.source || "").toLowerCase()),
+  );
+
+  const liveNeeded = selected.filter((p) => p === "linkedin" || p === "indeed" || p === "loopcv");
+  const now = new Date().toISOString();
+  const request = {
+    updatedAt: now,
+    platforms: selected,
+    status: liveNeeded.length ? "stub_partial" : "local_ats_ok",
+    filterActive: true,
+    resultCount: matched.length,
+    liveNeeded,
+    note:
+      liveNeeded.length > 0
+        ? `Local ATS results shown where available (${matched.length}). Live scrape for ${liveNeeded.join(", ")} needs the self-hosted worker + Chrome DevTools (and LoopCV MCP if selected).`
+        : `Filtered scout batch to ATS/company sources (${matched.length} jobs).`,
+  };
+  await writeJson(path.join(PROJECT_DIR, "search-request.json"), request);
+
+  const jobsPayload = await buildJobs();
+  return {
+    saved: true,
+    search: request,
+    jobs: jobsPayload,
+  };
+}
+
+async function gmailStatus() {
+  const file = path.join(PROJECT_DIR, "gmail-confirmations.json");
+  const data = await readJson(file, {
+    updatedAt: null,
+    connected: false,
+    confirmations: [],
+  });
+  return {
+    connected: Boolean(data.connected),
+    updatedAt: data.updatedAt || null,
+    source: data.source || "stub",
+    note:
+      data.note ||
+      "Gmail MCP (gmail.readonly) runs on the self-hosted worker. Dashboard sync accepts confirmation JSON until the MCP bridge lands. Setup: docs/project/gmail-mcp-setup.md",
+    confirmationCount: (data.confirmations || []).length,
+    confirmations: data.confirmations || [],
+  };
+}
+
+async function gmailSync(body) {
+  const file = path.join(PROJECT_DIR, "gmail-confirmations.json");
+  const existing = await readJson(file, {
+    updatedAt: null,
+    connected: false,
+    confirmations: [],
+  });
+  const now = new Date().toISOString();
+
+  if (Array.isArray(body.confirmations)) {
+    existing.confirmations = body.confirmations;
+    existing.connected = body.connected !== false;
+    existing.source = body.source || "dashboard_upload";
+    existing.updatedAt = now;
+    existing.note =
+      body.note ||
+      "Confirmations provided to dashboard API. Agent/worker may later bridge Gmail MCP search results here.";
+    await writeJson(file, existing);
+
+    // Optionally mark matching jobs applied when confirmation claims applied
+    const { data: applyStatus, file: applyFile } = await loadApplyStatus();
+    let touched = 0;
+    for (const c of body.confirmations) {
+      if (!c?.jobId || String(c.classification || "").toLowerCase() !== "applied") continue;
+      const jobs = Array.isArray(applyStatus.jobs) ? applyStatus.jobs : [];
+      const idx = jobs.findIndex((j) => j.jobId === c.jobId);
+      if (idx >= 0 && jobs[idx].status !== "applied") {
+        jobs[idx] = {
+          ...jobs[idx],
+          status: "applied",
+          reason: c.subject || c.reason || "Gmail confirmation via dashboard sync",
+          evidence: [
+            ...(Array.isArray(jobs[idx].evidence) ? jobs[idx].evidence : []),
+            `gmail:${c.subject || c.date || now}`,
+          ],
+          confirmedAt: c.date || now,
+        };
+        touched += 1;
+      }
+    }
+    if (touched > 0) {
+      applyStatus.jobs = applyStatus.jobs;
+      applyStatus.updatedAt = now;
+      await writeJson(applyFile, applyStatus);
+    }
+
+    return {
+      saved: true,
+      markedApplied: touched,
+      gmail: await gmailStatus(),
+      jobs: await buildJobs(),
+    };
+  }
+
+  // No payload — stub "connect" / refresh status
+  existing.updatedAt = now;
+  existing.source = "stub_refresh";
+  existing.connected = false;
+  existing.note =
+    "Gmail MCP not bridged to this local API yet. Authorize gmail.readonly on the laptop (docs/project/gmail-mcp-setup.md), then POST confirmations JSON or wire the worker bridge.";
+  await writeJson(file, existing);
+
+  return {
+    saved: true,
+    markedApplied: 0,
+    gmail: await gmailStatus(),
+    jobs: await buildJobs(),
+    message: existing.note,
+  };
 }
 
 function sendJson(res, status, body) {
@@ -305,9 +834,7 @@ async function readBody(req) {
   try {
     return JSON.parse(Buffer.concat(chunks).toString("utf8"));
   } catch {
-    const err = new Error("Invalid JSON body");
-    err.status = 400;
-    throw err;
+    throw httpError(400, "Invalid JSON body");
   }
 }
 
@@ -318,9 +845,39 @@ async function handleApi(req, res, url) {
   if (req.method === "GET" && url.pathname === "/api/jobs") {
     return sendJson(res, 200, await buildJobs());
   }
+  if (req.method === "GET" && url.pathname === "/api/resume") {
+    return sendJson(res, 200, await resumeInfo());
+  }
+  if (req.method === "POST" && url.pathname === "/api/resume/upload") {
+    return sendJson(res, 200, await uploadResume(await readBody(req)));
+  }
+  if (req.method === "POST" && url.pathname === "/api/resume/analyse") {
+    return sendJson(res, 200, await analyseResume());
+  }
+  if (req.method === "POST" && url.pathname === "/api/search") {
+    return sendJson(res, 200, await searchJobs(await readBody(req)));
+  }
   if (req.method === "POST" && url.pathname === "/api/approve") {
     const body = await readBody(req);
     return sendJson(res, 200, await approveJob(body.jobId, body.note));
+  }
+  if (req.method === "POST" && url.pathname === "/api/apply") {
+    const body = await readBody(req);
+    return sendJson(res, 200, await applyJob(body.jobId, body.note));
+  }
+  if (req.method === "POST" && url.pathname === "/api/skip") {
+    const body = await readBody(req);
+    return sendJson(res, 200, await decideJob(body.jobId, "skipped", body.note));
+  }
+  if (req.method === "POST" && url.pathname === "/api/block") {
+    const body = await readBody(req);
+    return sendJson(res, 200, await decideJob(body.jobId, "blocked", body.note));
+  }
+  if (req.method === "GET" && url.pathname === "/api/gmail") {
+    return sendJson(res, 200, await gmailStatus());
+  }
+  if (req.method === "POST" && url.pathname === "/api/gmail/sync") {
+    return sendJson(res, 200, await gmailSync(await readBody(req)));
   }
   sendJson(res, 404, { error: "Not found" });
 }

@@ -1,0 +1,5 @@
+{
+  "updatedAt": null,
+  "note": "Agent/self-hosted worker watches this queue. Apply from the dashboard enqueues a job; Chrome DevTools MCP on the worker performs the browser apply.",
+  "queue": []
+}

@@ -3,3 +3,7 @@ node_modules
 .env.local
 .agent-serve
 memory
+apps/dashboard/dist
+bot/sandbox/workspace/uploads/*
+!bot/sandbox/workspace/uploads/.gitkeep
+docs/project/resume-analysis.json

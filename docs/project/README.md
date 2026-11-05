@@ -22,8 +22,13 @@ Snapshot of Job Search Project status documents, plus local dashboard JSON.
 | --- | --- |
 | `scout-batch-1.json` | Scouted listings (fit scores, URLs) — shared with dashboard |
 | `apply-status-batch-1.json` | Honest apply outcomes — never invent `applied` |
-| `approvals.json` | Dashboard approve actions; agent reads this before apply |
+| `approvals.json` | Dashboard approvals; agent reads before apply |
+| `apply-queue.json` | **Worker watch file** — Chrome apply queue from dashboard Apply |
+| `job-decisions.json` | Skip / block from dashboard |
+| `resume-analysis.json` | Last heuristic resume analysis (created on Analyse) |
+| `search-request.json` | Last platform search request |
+| `gmail-confirmations.json` | Gmail sync stub / ingested confirmation rows |
 
-Workspace artifacts under `bot/sandbox/workspace/applications/<job-id>/` are merged at runtime (`meta.json`, `status.json`).
+Workspace artifacts under `bot/sandbox/workspace/applications/<job-id>/` are merged at runtime (`meta.json`, `status.json`). Uploads land in `bot/sandbox/workspace/uploads/`.
 
 Local UI: `apps/dashboard` via `npm run dashboard` (do not deploy).

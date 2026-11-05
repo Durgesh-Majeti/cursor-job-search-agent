@@ -59,7 +59,7 @@ LoopCV is **not required**. To enable listing queries:
 
 Endpoint stubbed in the example: `https://api.loopcv.com/mcp`.
 
-## Local dashboard (approve / status)
+## Local dashboard (resume / search / apply inbox)
 
 ```bash
 npm --prefix apps/dashboard install
@@ -68,9 +68,11 @@ npm run dashboard
 # API: http://127.0.0.1:8787
 ```
 
-Reads `docs/project/*.json` + `bot/sandbox/workspace/applications/`. Approve
-writes `docs/project/approvals.json` for the agent. See Project Context
-`docs/dashboard.md` for details.
+Resume upload + analyse, platform search checkboxes, fit-scored job list,
+per-job **Apply** (writes `docs/project/approvals.json` +
+`docs/project/apply-queue.json` for Chrome on the self-hosted worker),
+skip/block, Gmail sync stub. Local-only — do not deploy. See Project Context
+`docs/dashboard.md` and [`docs/local-apply.md`](docs/local-apply.md).
 
 ## Local apply (Chrome + self-hosted worker)
 

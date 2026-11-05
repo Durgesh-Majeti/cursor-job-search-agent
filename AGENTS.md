@@ -26,6 +26,8 @@ Run the CLI under Node, never Bun.
 - `docs/examples/` — LoopCV + Chrome DevTools connection stubs (copy to enable)
 - `bot/sandbox/workspace/` — profile, experience library, resume (PDF + md)
 - `docs/local-apply.md` — Chrome DevTools MCP + self-hosted worker notes
+- `apps/dashboard/` — local Vite inbox (resume, search, apply-queue); `npm run dashboard`
+- `docs/project/apply-queue.json` — worker-watched Chrome apply queue
 - `evals/` — filesystem evals (`evals/evals.config.ts` required)
 
 ## Do not

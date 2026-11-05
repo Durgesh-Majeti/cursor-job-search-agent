@@ -70,9 +70,25 @@ Use skill **`linkedin-easy-apply`** (not the generic ATS `apply` playbook).
 External “Apply” buttons that leave LinkedIn → use the `apply` skill for the
 destination ATS (Greenhouse → Lever → Ashby → Workday).
 
+## Dashboard apply queue
+
+The local Vite dashboard (`apps/dashboard`, `npm run dashboard`) is the human
+inbox. Clicking **Apply** on a job:
+
+1. Writes/updates `docs/project/approvals.json` (`status: approved`)
+2. Enqueues the job in **`docs/project/apply-queue.json`** (`status: queued`)
+
+The self-hosted worker / agent should **watch** `docs/project/apply-queue.json`,
+run Chrome DevTools apply (ATS or `linkedin-easy-apply`), then update
+`apply-status*.json` / workspace `status.json` with evidence. The dashboard
+never drives the browser or invents `applied`.
+
+Skip/Block from the UI writes `docs/project/job-decisions.json` and removes the
+job from the queue.
+
 ## Safety
 
-- Job must be `approved` / `ready_to_apply` before fill+submit.
+- Job must be `approved` / `ready_to_apply` (or queued via dashboard Apply) before fill+submit.
 - Never store passwords in `host.kv` or skills.
 - Always finish with `verify` → `applied` | `blocked` | `needs_human`.
 - Never invent employers, dates, metrics, or an `applied` outcome.
@@ -81,4 +97,4 @@ destination ATS (Greenhouse → Lever → Ashby → Workday).
 
 - Skill: `bot/skills/linkedin-easy-apply.md`
 - Optional listing volume: copy `docs/examples/loopcv.ts` → `bot/mcp-connections/`
-- Approve inbox: separate Cursor Canvas Project UI (not this repo)
+- Local inbox: `apps/dashboard` (`npm run dashboard`) — not Canvas, not hosted
