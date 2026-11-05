@@ -267,8 +267,9 @@ export function App() {
         <p>
           Upload a resume, search platforms, score fits, then Apply per job. Apply
           writes approval +{" "}
-          <code>docs/project/apply-queue.json</code> for Chrome on your
-          self-hosted worker — this UI never submits forms.
+          <code>docs/project/apply-queue.json</code>. Keep{" "}
+          <code>npm run apply-queue</code> running so Chrome/agent can claim
+          jobs — this UI never submits forms.
         </p>
       </header>
 

@@ -24,6 +24,8 @@ Snapshot of Job Search Project status documents, plus local dashboard JSON.
 | `apply-status-batch-1.json` | Honest apply outcomes — never invent `applied` |
 | `approvals.json` | Dashboard approvals; agent reads before apply |
 | `apply-queue.json` | **Worker watch file** — Chrome apply queue from dashboard Apply |
+| `apply-runner-status.json` | Heartbeat from `npm run apply-queue` |
+| `apply-run-request.json` | Active claimed job + artifact paths for Chrome/agent |
 | `job-decisions.json` | Skip / block from dashboard |
 | `resume-analysis.json` | Last heuristic resume analysis (created on Analyse) |
 | `search-request.json` | Last platform search request |

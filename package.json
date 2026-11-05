@@ -9,6 +9,8 @@
     "dashboard": "npm --prefix apps/dashboard run dev",
     "dashboard:build": "npm --prefix apps/dashboard run build",
     "dashboard:start": "npm --prefix apps/dashboard run start",
+    "apply-queue": "node scripts/apply-queue-runner.mjs",
+    "apply-queue:once": "node scripts/apply-queue-runner.mjs --once",
     "validate": "agent-sdk validate --dir .",
     "info": "agent-sdk info --dir . --json"
   },

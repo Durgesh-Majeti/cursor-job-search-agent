@@ -7,3 +7,5 @@ apps/dashboard/dist
 bot/sandbox/workspace/uploads/*
 !bot/sandbox/workspace/uploads/.gitkeep
 docs/project/resume-analysis.json
+docs/project/apply-runner-status.json
+docs/project/apply-run-request.json
