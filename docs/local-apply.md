@@ -31,8 +31,9 @@ submit applications.
    ```
 
 3. Optional: enable **Gmail readonly MCP** for email verification codes during
-   apply (LinkedIn / employer MFA). See Project doc `docs/gmail-mcp-setup.md`
-   (Context store). Scope must stay `gmail.readonly`.
+   apply (LinkedIn / employer MFA). See `docs/project/gmail-mcp-setup.md`.
+   Scope must stay `gmail.readonly`. The local dashboard Sync Gmail button also
+   reads the same `%USERPROFILE%\.gmail-mcp` tokens (no Cursor MCP mid-request).
 4. Add a privileged connection under `bot/host-connections/` (start from
    `docs/examples/chrome-devtools-host.ts`) so only host/tool code can drive
    the browser — keep it out of casual model tool lists until ready.

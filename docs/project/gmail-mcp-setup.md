@@ -1,9 +1,18 @@
 # Gmail MCP — read-only setup (Windows)
 
-Purpose: let job-apply agents **search/read** verification emails (Databricks, Karat, etc.).  
+Purpose: let job-apply agents **search/read** verification emails (Databricks, Karat, etc.), and let the **local dashboard** Sync Gmail button classify confirmations without Cursor MCP mid-request.  
 **Scope:** `gmail.readonly` only — no send, delete, or modify.
 
 Package: `@klodr/gmail-mcp` (supports `--scopes=gmail.readonly`).
+
+Dashboard API reads the same files:
+
+| File | Role |
+| --- | --- |
+| `%USERPROFILE%\.gmail-mcp\gcp-oauth.keys.json` | OAuth desktop client |
+| `%USERPROFILE%\.gmail-mcp\credentials.json` | Tokens (`tokens.refresh_token`, …) |
+
+Override directory (or path to `credentials.json`) with `GMAIL_MCP_CREDENTIALS_PATH`.
 
 ## 1. Google Cloud OAuth (one-time)
 
