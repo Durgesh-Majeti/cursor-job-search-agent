@@ -74,15 +74,22 @@ writes `docs/project/approvals.json` for the agent. See Project Context
 
 ## Local apply (Chrome + self-hosted worker)
 
-See [`docs/local-apply.md`](docs/local-apply.md). Until a self-hosted worker and
-Chrome DevTools MCP are connected, the agent must classify apply attempts as
-`needs_human` rather than claiming `applied`.
+See [`docs/local-apply.md`](docs/local-apply.md). Target worker:
+**`durgesh-laptop`** with Chrome DevTools MCP and Chrome logged into LinkedIn.
+
+- **ATS forms** (Greenhouse → Lever → Ashby → Workday): `apply` skill
+- **LinkedIn Easy Apply**: `linkedin-easy-apply` skill (local only)
+
+Until the worker + Chrome session are connected, the agent must classify apply
+attempts as `needs_human` rather than claiming `applied`. Optional Gmail
+readonly MCP can supply email verification codes during apply.
 
 ## Profile materials
 
 Resume + profile live under `bot/sandbox/workspace/` (`profile.json`,
 `experience-library.json`, `resume.md`, `resume.pdf`). Run the `setup` skill
 to load them into `host.kv`. Confirm target locations before scouting.
+Application name on forms: **Durgesh Majeti**.
 
 ## Skills
 
@@ -93,7 +100,8 @@ to load them into `host.kv`. Confirm target locations before scouting.
 | `fit-score` | 0–100 fit |
 | `tailor-resume` | Facts-only per-JD resume |
 | `cover-letter` | Short letter when required |
-| `apply` | Approved jobs only; local browser |
+| `apply` | Approved ATS jobs; local browser |
+| `linkedin-easy-apply` | Approved LinkedIn Easy Apply on self-hosted worker |
 | `verify` | `applied` / `blocked` / `needs_human` |
 | `track` | Pipeline + duplicates |
 | `briefing` | Digest of matches and stuck apps |

@@ -18,7 +18,7 @@ Run the CLI under Node, never Bun.
 ## Layout
 
 - `bot/instructions.md` — always-on prompt (keep short; procedures live in skills)
-- `bot/skills/*.md` — setup, scout, fit-score, tailor-resume, cover-letter, apply, verify, track, briefing
+- `bot/skills/*.md` — setup, scout, fit-score, tailor-resume, cover-letter, apply, linkedin-easy-apply, verify, track, briefing
 - `bot/tools/*.ts` — one tool per file; durable state via `ctx.host.kv`
 - `bot/lib/` — shared keys/types only (never discovered)
 - `bot/mcp-connections/` — enable optional MCP here (empty by default)

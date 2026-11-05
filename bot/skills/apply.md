@@ -15,8 +15,11 @@ description: Use only for approved jobs — browser/ATS form fill on a self-host
 
 ## ATS playbook order
 
-Greenhouse → Lever → Ashby → Workday (multi-step). LinkedIn Easy Apply only on
-local browser with the user's logged-in profile.
+Greenhouse → Lever → Ashby → Workday (multi-step).
+
+For LinkedIn **Easy Apply**, load `linkedin-easy-apply` instead (self-hosted
+worker + Chrome logged into LinkedIn). External LinkedIn “Apply” that lands on
+an ATS stays in this skill.
 
 ## Steps
 

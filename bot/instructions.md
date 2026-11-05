@@ -29,6 +29,7 @@ verify and track outcomes.
 | `tailor-resume` | Producing a per-JD resume from the experience library |
 | `cover-letter` | Cover letter is required or explicitly requested |
 | `apply` | Job is approved; fill ATS forms (local browser / self-hosted worker) |
+| `linkedin-easy-apply` | Approved LinkedIn Easy Apply on self-hosted worker + Chrome |
 | `verify` | Confirming apply outcome or classifying a blocker |
 | `track` | Pipeline updates, duplicates, follow-ups |
 | `briefing` | Morning / weekly digest of matches and stuck apps |
@@ -37,8 +38,10 @@ verify and track outcomes.
 
 - **Cloud-friendly:** setup parse, fit-score, tailor, cover-letter, track
   aggregation, briefing, ATS URL scout.
-- **Local / self-hosted:** LinkedIn/Indeed scout, browser apply (Greenhouse →
-  Lever → Ashby → Workday), screenshots. See `docs/local-apply.md`.
+- **Local / self-hosted (`durgesh-laptop`):** LinkedIn/Indeed scout, ATS browser
+  apply (Greenhouse → Lever → Ashby → Workday), LinkedIn Easy Apply
+  (`linkedin-easy-apply`), screenshots. See `docs/local-apply.md`. Optional
+  Gmail readonly MCP for verification codes.
 - **Optional:** LoopCV MCP (`https://api.loopcv.com/mcp`) — listing volume only.
   Disabled by default; see `docs/examples/loopcv.ts`.
 
