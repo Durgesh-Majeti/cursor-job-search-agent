@@ -1,12 +1,15 @@
 {
-  "updatedAt": "2026-11-05T11:49:42Z",
+  "updatedAt": "2026-11-21T06:05:07.319Z",
   "platforms": [
     "greenhouse",
-    "linkedin"
+    "linkedin",
+    "loopcv"
   ],
   "status": "ok",
   "filterActive": true,
-  "resultCount": 42,
-  "liveNeeded": [],
-  "note": "ATS scout retained; LinkedIn Easy Apply live scout merged (20 linkedin jobs, postedWithin=48h). Refresh dashboard to see them."
+  "resultCount": 53,
+  "liveNeeded": [
+    "loopcv"
+  ],
+  "note": "LinkedIn Easy Apply scout refreshed (2026-11-21T06:05:07Z). 53 jobs in scout-batch-1 (ATS retained; pruned blocked/closed; +20 LinkedIn). LoopCV still needs MCP if selected."
 }
