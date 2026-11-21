@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T06:30:21.323Z",
+  "updatedAt": "2026-11-21T06:46:00.360Z",
   "note": "Dashboard Apply enqueues here. Run `npm run apply-queue` on durgesh-laptop; Chrome DevTools MCP / agent completes the form.",
   "queue": [
     {
@@ -301,6 +301,163 @@
       "evidence": [
         "https://jobs.ashbyhq.com/cursor/166c3951-1d2a-4e61-b79b-bedefe96073b → Page not found",
         "https://jobs.ashbyhq.com/cursor/166c3951-1d2a-4e61-b79b-bedefe96073b?embed=true → Page not found"
+      ]
+    },
+    {
+      "jobId": "li-4492547442",
+      "queuedAt": "2026-11-21T06:31:07.977Z",
+      "status": "applied",
+      "company": "Sapiens",
+      "title": "Senior Agentic AI Engineer",
+      "url": "https://www.linkedin.com/jobs/view/4492547442/",
+      "source": "linkedin",
+      "fitScore": 86,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:31:07.991Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:35:54.465Z",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492547442/",
+        "Application status: Application submitted (now)"
+      ]
+    },
+    {
+      "jobId": "lever-outreach-16657196",
+      "queuedAt": "2026-11-21T06:31:13.412Z",
+      "status": "needs_human",
+      "company": "Outreach",
+      "title": "Senior Forward Deployed Engineer, Managed Services",
+      "url": "https://jobs.lever.co/outreach/16657196-aa36-4b6c-9349-ff052cca047a",
+      "source": "lever",
+      "fitScore": 86,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:31:13.424Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:46:00.356Z",
+      "reason": "Lever form filled + resume attached (Success!); hCaptcha challenge appeared on Submit. Location may need re-select from autocomplete. Leave page open for human CAPTCHA + Submit.",
+      "evidence": [
+        "https://jobs.lever.co/outreach/16657196-aa36-4b6c-9349-ff052cca047a/apply",
+        "Resume: Durgesh_Majeti_Resume.pdf Success!",
+        "hCaptcha: Find the vehicle with the same number of wheels as the example",
+        "Fields filled: name/email/phone/company/LinkedIn/US-hours=Yes"
+      ]
+    },
+    {
+      "jobId": "li-4492576438",
+      "queuedAt": "2026-11-21T06:31:18.768Z",
+      "status": "applied",
+      "company": "ChevalBleu Labs",
+      "title": "Senior AI/ML Engineer",
+      "url": "https://www.linkedin.com/jobs/view/4492576438/",
+      "source": "linkedin",
+      "fitScore": 86,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:31:18.774Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:36:27.783Z",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492576438/",
+        "Application status: Application submitted (now)"
+      ]
+    },
+    {
+      "jobId": "li-4492463408",
+      "queuedAt": "2026-11-21T06:31:21.360Z",
+      "status": "applied",
+      "company": "Persistent Systems",
+      "title": "Sr. AI Developer",
+      "url": "https://www.linkedin.com/jobs/view/4492463408/",
+      "source": "linkedin",
+      "fitScore": 87,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:31:21.373Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:37:25.173Z",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492463408/",
+        "Application status: Application submitted (now)",
+        "Answers: IT exp 5, notice 90, contract Yes, 180k/mo No"
+      ]
+    },
+    {
+      "jobId": "li-4482924593",
+      "queuedAt": "2026-11-21T06:31:29.039Z",
+      "status": "blocked",
+      "company": "Omniskope, Inc",
+      "title": "Databricks Engineer",
+      "url": "https://www.linkedin.com/jobs/view/4482924593/",
+      "source": "linkedin",
+      "fitScore": 88,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:31:29.045Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:37:40.690Z",
+      "reason": "LinkedIn: Posted 2 weeks ago (stale >7d). No Easy Apply button present.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4482924593/",
+        "Posted: 2 weeks ago",
+        "Easy Apply: absent"
+      ]
+    },
+    {
+      "jobId": "li-4492564393",
+      "queuedAt": "2026-11-21T06:31:39.535Z",
+      "status": "applied",
+      "company": "Accion Labs",
+      "title": "Databricks Data Engineer",
+      "url": "https://www.linkedin.com/jobs/view/4492564393/",
+      "source": "linkedin",
+      "fitScore": 85,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:31:39.551Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:38:59.638Z",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492564393/",
+        "Application status: Application submitted (now)"
+      ]
+    },
+    {
+      "jobId": "li-4485801771",
+      "queuedAt": "2026-11-21T06:31:49.821Z",
+      "status": "blocked",
+      "company": "Fidelity International",
+      "title": "Distinguish Data engineer (ARTIFICIAL INTELLIGENCE)",
+      "url": "https://www.linkedin.com/jobs/view/4485801771/",
+      "source": "linkedin",
+      "fitScore": 85,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:31:49.830Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:38:15.195Z",
+      "reason": "LinkedIn: Posted 2 weeks ago (stale >7d). Easy Apply present but recency gate blocks.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4485801771/",
+        "Posted: 2 weeks ago",
+        "Easy Apply: present"
+      ]
+    },
+    {
+      "jobId": "li-4484702530",
+      "queuedAt": "2026-11-21T06:31:54.156Z",
+      "status": "applied",
+      "company": "Netskope",
+      "title": "Sr. Staff Engineer, Agentic AI",
+      "url": "https://www.linkedin.com/jobs/view/4484702530/",
+      "source": "linkedin",
+      "fitScore": 85,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:31:54.165Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:40:20.746Z",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4484702530/",
+        "Application status: Application submitted (now)"
       ]
     }
   ]

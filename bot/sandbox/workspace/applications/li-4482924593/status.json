@@ -1,0 +1,11 @@
+{
+  "status": "blocked",
+  "reason": "LinkedIn: Posted 2 weeks ago (stale >7d). No Easy Apply button present.",
+  "evidence": [
+    "https://www.linkedin.com/jobs/view/4482924593/",
+    "Posted: 2 weeks ago",
+    "Easy Apply: absent"
+  ],
+  "updatedAt": "2026-11-21T06:37:40.690Z",
+  "source": "apply_queue_runner"
+}

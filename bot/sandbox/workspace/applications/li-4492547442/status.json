@@ -1,0 +1,10 @@
+{
+  "status": "applied",
+  "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+  "evidence": [
+    "https://www.linkedin.com/jobs/view/4492547442/",
+    "Application status: Application submitted (now)"
+  ],
+  "updatedAt": "2026-11-21T06:35:54.465Z",
+  "source": "apply_queue_runner"
+}

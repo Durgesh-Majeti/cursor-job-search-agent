@@ -1,15 +1,15 @@
 {
   "batch": "approved-batch-1",
-  "updatedAt": "2026-11-21T06:30:21.319Z",
+  "updatedAt": "2026-11-21T06:46:00.356Z",
   "applicationName": "Durgesh Majeti",
   "repoCommit": "92bbdc0",
   "artifactsPushedToMain": true,
   "worker": "durgesh-laptop",
   "counts": {
-    "applied": 12,
-    "blocked": 7,
-    "needs_human": 4,
-    "pending_local": 9
+    "applied": 17,
+    "blocked": 9,
+    "needs_human": 5,
+    "pending_local": 8
   },
   "note": "First confirmed apply: Databricks FDE L5 after user entered Greenhouse email security code. MCP upload_file ACL blocks resume path on this worker; Greenhouse may autofill. No invented applied statuses.",
   "jobs": [
@@ -119,11 +119,18 @@
       "jobId": "lever-outreach-16657196",
       "company": "Outreach",
       "title": "Senior Forward Deployed Engineer, Managed Services",
-      "source": "lever",
+      "source": "chrome_devtools_mcp",
       "url": "https://jobs.lever.co/outreach/16657196-aa36-4b6c-9349-ff052cca047a",
-      "status": "pending_local",
-      "reason": "Form fields filled locally; resume upload blocked by MCP upload_file ACL",
-      "artifactPath": "bot/sandbox/workspace/applications/lever-outreach-16657196/"
+      "status": "needs_human",
+      "reason": "Lever form filled + resume attached (Success!); hCaptcha challenge appeared on Submit. Location may need re-select from autocomplete. Leave page open for human CAPTCHA + Submit.",
+      "artifactPath": "bot/sandbox/workspace/applications/lever-outreach-16657196/",
+      "evidence": [
+        "https://jobs.lever.co/outreach/16657196-aa36-4b6c-9349-ff052cca047a/apply",
+        "Resume: Durgesh_Majeti_Resume.pdf Success!",
+        "hCaptcha: Find the vehicle with the same number of wheels as the example",
+        "Fields filled: name/email/phone/company/LinkedIn/US-hours=Yes"
+      ],
+      "confirmedAt": "2026-11-21T06:46:00.356Z"
     },
     {
       "jobId": "gh-gleanwork-4739975005",
@@ -440,6 +447,114 @@
         "Application status: Application submitted (now)"
       ],
       "confirmedAt": "2026-11-21T06:30:00.450Z"
+    },
+    {
+      "jobId": "li-4492547442",
+      "company": "Sapiens",
+      "title": "Senior Agentic AI Engineer",
+      "source": "apply_queue_runner",
+      "url": "https://www.linkedin.com/jobs/view/4492547442/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4492547442/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492547442/",
+        "Application status: Application submitted (now)"
+      ],
+      "confirmedAt": "2026-11-21T06:35:54.465Z"
+    },
+    {
+      "jobId": "li-4492576438",
+      "company": "ChevalBleu Labs",
+      "title": "Senior AI/ML Engineer",
+      "source": "apply_queue_runner",
+      "url": "https://www.linkedin.com/jobs/view/4492576438/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4492576438/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492576438/",
+        "Application status: Application submitted (now)"
+      ],
+      "confirmedAt": "2026-11-21T06:36:27.783Z"
+    },
+    {
+      "jobId": "li-4492463408",
+      "company": "Persistent Systems",
+      "title": "Sr. AI Developer",
+      "source": "apply_queue_runner",
+      "url": "https://www.linkedin.com/jobs/view/4492463408/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4492463408/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492463408/",
+        "Application status: Application submitted (now)",
+        "Answers: IT exp 5, notice 90, contract Yes, 180k/mo No"
+      ],
+      "confirmedAt": "2026-11-21T06:37:25.173Z"
+    },
+    {
+      "jobId": "li-4482924593",
+      "company": "Omniskope, Inc",
+      "title": "Databricks Engineer",
+      "source": "apply_queue_runner",
+      "url": "https://www.linkedin.com/jobs/view/4482924593/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4482924593/",
+      "status": "blocked",
+      "reason": "LinkedIn: Posted 2 weeks ago (stale >7d). No Easy Apply button present.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4482924593/",
+        "Posted: 2 weeks ago",
+        "Easy Apply: absent"
+      ],
+      "confirmedAt": "2026-11-21T06:37:40.690Z"
+    },
+    {
+      "jobId": "li-4485801771",
+      "company": "Fidelity International",
+      "title": "Distinguish Data engineer (ARTIFICIAL INTELLIGENCE)",
+      "source": "apply_queue_runner",
+      "url": "https://www.linkedin.com/jobs/view/4485801771/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4485801771/",
+      "status": "blocked",
+      "reason": "LinkedIn: Posted 2 weeks ago (stale >7d). Easy Apply present but recency gate blocks.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4485801771/",
+        "Posted: 2 weeks ago",
+        "Easy Apply: present"
+      ],
+      "confirmedAt": "2026-11-21T06:38:15.195Z"
+    },
+    {
+      "jobId": "li-4492564393",
+      "company": "Accion Labs",
+      "title": "Databricks Data Engineer",
+      "source": "apply_queue_runner",
+      "url": "https://www.linkedin.com/jobs/view/4492564393/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4492564393/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492564393/",
+        "Application status: Application submitted (now)"
+      ],
+      "confirmedAt": "2026-11-21T06:38:59.638Z"
+    },
+    {
+      "jobId": "li-4484702530",
+      "company": "Netskope",
+      "title": "Sr. Staff Engineer, Agentic AI",
+      "source": "chrome_devtools_mcp",
+      "url": "https://www.linkedin.com/jobs/view/4484702530/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4484702530/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4484702530/",
+        "Application status: Application submitted (now)"
+      ],
+      "confirmedAt": "2026-11-21T06:40:20.746Z"
     }
   ]
 }

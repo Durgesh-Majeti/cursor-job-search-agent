@@ -1,0 +1,12 @@
+{
+  "status": "needs_human",
+  "reason": "Lever form filled + resume attached (Success!); hCaptcha challenge appeared on Submit. Location may need re-select from autocomplete. Leave page open for human CAPTCHA + Submit.",
+  "evidence": [
+    "https://jobs.lever.co/outreach/16657196-aa36-4b6c-9349-ff052cca047a/apply",
+    "Resume: Durgesh_Majeti_Resume.pdf Success!",
+    "hCaptcha: Find the vehicle with the same number of wheels as the example",
+    "Fields filled: name/email/phone/company/LinkedIn/US-hours=Yes"
+  ],
+  "updatedAt": "2026-11-21T06:46:00.356Z",
+  "source": "chrome_devtools_mcp"
+}
