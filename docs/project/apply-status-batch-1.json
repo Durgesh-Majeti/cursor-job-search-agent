@@ -1,15 +1,15 @@
 {
   "batch": "approved-batch-1",
-  "updatedAt": "2026-11-05T11:19:43.989Z",
+  "updatedAt": "2026-11-21T05:51:35.191Z",
   "applicationName": "Durgesh Majeti",
   "repoCommit": "92bbdc0",
   "artifactsPushedToMain": true,
   "worker": "durgesh-laptop",
   "counts": {
-    "applied": 3,
-    "blocked": 1,
-    "needs_human": 5,
-    "pending_local": 11
+    "applied": 5,
+    "blocked": 5,
+    "needs_human": 4,
+    "pending_local": 10
   },
   "note": "First confirmed apply: Databricks FDE L5 after user entered Greenhouse email security code. MCP upload_file ACL blocks resume path on this worker; Greenhouse may autofill. No invented applied statuses.",
   "jobs": [
@@ -53,11 +53,17 @@
       "jobId": "gh-databricks-8878946002",
       "company": "Databricks",
       "title": "Evergreen - AI Engineer, AI FDE",
-      "source": "greenhouse",
+      "source": "chrome_devtools_apply_worker",
       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8878946002",
-      "status": "pending_local",
-      "reason": "Artifacts ready; local apply",
-      "artifactPath": "bot/sandbox/workspace/applications/gh-databricks-8878946002/"
+      "status": "blocked",
+      "reason": "Job removed/closed: databricks.com careers 404; Greenhouse API Job not found for 8878946002; job-boards.greenhouse.io redirects to open-positions.",
+      "artifactPath": "bot/sandbox/workspace/applications/gh-databricks-8878946002/",
+      "evidence": [
+        "databricks.com careers page 404: Oops, we're missing data on this page",
+        "api.greenhouse.io/v1/boards/databricks/jobs/8878946002 -> status 404 Job not found",
+        "job-boards.greenhouse.io/databricks/jobs/8878946002 redirects to open-positions"
+      ],
+      "confirmedAt": "2026-11-21T05:51:35.161Z"
     },
     {
       "jobId": "lever-resilinc-98e013c3",
@@ -65,9 +71,14 @@
       "title": "Senior Data Engineer",
       "source": "lever",
       "url": "https://jobs.lever.co/resilinc/98e013c3-84ff-4596-8712-6401c0fb3d55",
-      "status": "needs_human",
-      "reason": "hCaptcha challenge blocked submit after form fill + resume upload",
-      "artifactPath": "bot/sandbox/workspace/applications/lever-resilinc-98e013c3/"
+      "status": "blocked",
+      "reason": "Your application to Data Scientist at Joveo",
+      "artifactPath": "bot/sandbox/workspace/applications/lever-resilinc-98e013c3/",
+      "evidence": [
+        "gmail:rejection:Your application to Data Scientist at Joveo"
+      ],
+      "confirmedAt": "2026-11-06T07:36:13.000Z",
+      "gmailClassification": "rejection"
     },
     {
       "jobId": "ashby-notion-79c18580",
@@ -229,6 +240,72 @@
       "status": "pending_local",
       "reason": "Artifacts ready; local apply",
       "artifactPath": "bot/sandbox/workspace/applications/gh-gleanwork-4747460005/"
+    },
+    {
+      "jobId": "li-4487737623",
+      "company": "Innova ESI",
+      "title": "Senior Data Engineer - Semantic Layer",
+      "source": "apply_queue_runner",
+      "url": "https://www.linkedin.com/jobs/view/4487737623/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4487737623/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now. List shows Applied.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4487737623/",
+        "Application status: Application submitted (now)",
+        "Search card: Applied · Be an early applicant"
+      ],
+      "confirmedAt": "2026-11-05T12:03:02.143Z"
+    },
+    {
+      "jobId": "li-4486317960",
+      "company": "Jobgether",
+      "title": "Senior AI Engineer",
+      "source": "apply_queue_runner",
+      "url": "https://www.linkedin.com/jobs/view/4486317960/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4486317960/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply (Lever-powered) confirmation: Your application was sent to Jobgether! + Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4486317960/",
+        "Dialog: Your application was sent to Jobgether!",
+        "Application status: Application submitted (now)"
+      ],
+      "confirmedAt": "2026-11-05T12:03:02.157Z"
+    },
+    {
+      "jobId": "li-4487730364",
+      "company": "Newpage Solutions",
+      "title": "Forward Deployed Engineer",
+      "source": "chrome_devtools_apply_worker",
+      "url": "https://www.linkedin.com/jobs/view/4487730364/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4487730364/",
+      "status": "blocked",
+      "reason": "LinkedIn: No longer accepting applications. Posted 2 weeks ago (stale >7d). Location Chennai on-site.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4487730364/",
+        "No longer accepting applications",
+        "Posted: 2 weeks ago",
+        "Location: Chennai, Tamil Nadu, India · On-site"
+      ],
+      "confirmedAt": "2026-11-21T05:50:10.052Z"
+    },
+    {
+      "jobId": "li-4485596872",
+      "company": "ThinkWise Consulting LLP",
+      "title": "Senior Data Engineer",
+      "source": "chrome_devtools_apply_worker",
+      "url": "https://www.linkedin.com/jobs/view/4485596872/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4485596872/",
+      "status": "blocked",
+      "reason": "LinkedIn: No longer accepting applications. Posted 2 weeks ago (stale >7d). Hyderabad on-site.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4485596872/",
+        "No longer accepting applications",
+        "Posted: 2 weeks ago",
+        "Location: Hyderabad, Telangana, India · On-site"
+      ],
+      "confirmedAt": "2026-11-21T05:51:35.191Z"
     }
   ]
 }
