@@ -1,0 +1,10 @@
+{
+  "status": "blocked",
+  "reason": "Ashby page not found — posting removed or URL invalid (queued id 166c3951). Newer India FDE posting exists under different job UUID but not in this queue.",
+  "evidence": [
+    "https://jobs.ashbyhq.com/cursor/166c3951-1d2a-4e61-b79b-bedefe96073b → Page not found",
+    "https://jobs.ashbyhq.com/cursor/166c3951-1d2a-4e61-b79b-bedefe96073b?embed=true → Page not found"
+  ],
+  "updatedAt": "2026-11-21T06:30:21.319Z",
+  "source": "apply_queue_runner"
+}

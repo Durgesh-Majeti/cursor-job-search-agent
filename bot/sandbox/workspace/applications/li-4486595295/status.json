@@ -1,0 +1,12 @@
+{
+  "status": "blocked",
+  "reason": "LinkedIn: Posted 2 weeks ago (stale >7d). Greater Hyderabad Area · Hybrid. Easy Apply present but recency gate blocks.",
+  "evidence": [
+    "https://www.linkedin.com/jobs/view/4486595295/",
+    "Posted: 2 weeks ago",
+    "Easy Apply button present",
+    "Location: Greater Hyderabad Area · Hybrid"
+  ],
+  "updatedAt": "2026-11-21T06:19:43.012Z",
+  "source": "chrome_devtools_apply_worker"
+}

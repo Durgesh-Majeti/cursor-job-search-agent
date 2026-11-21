@@ -1,0 +1,11 @@
+{
+  "status": "blocked",
+  "reason": "LinkedIn: Posted 2 weeks ago (stale >7d). Easy Apply present but recency gate blocks.",
+  "evidence": [
+    "https://www.linkedin.com/jobs/view/4485801771/",
+    "Posted: 2 weeks ago",
+    "Easy Apply: present"
+  ],
+  "updatedAt": "2026-11-21T06:38:15.195Z",
+  "source": "apply_queue_runner"
+}
