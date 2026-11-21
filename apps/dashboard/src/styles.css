@@ -530,6 +530,52 @@ code {
   margin-bottom: 0.65rem;
 }
 
+.panel-empty {
+  margin: 0;
+  border: 1px dashed var(--line);
+  background: #fff;
+}
+
+.email-list {
+  margin: 0;
+}
+
+.badge.email-confirmation {
+  color: var(--ok);
+  background: #dcefe3;
+  border-color: #b7d9c4;
+}
+
+.badge.email-rejection {
+  color: var(--danger);
+  background: #f3e0e0;
+  border-color: #e0c0c0;
+}
+
+.badge.email-interview {
+  color: var(--accent-ink);
+  background: #d9efe8;
+  border-color: #b5ddd1;
+}
+
+.badge.email-recruiter {
+  color: var(--warn);
+  background: #f5ebda;
+  border-color: #e2d0ad;
+}
+
+.badge.email-verification {
+  color: var(--pending);
+  background: #e8ecf0;
+  border-color: #cfd6de;
+}
+
+.badge.email-other {
+  color: var(--pending);
+  background: #eceff2;
+  border-color: #d0d6dc;
+}
+
 .error {
   color: var(--danger);
   background: #f8ecec;
