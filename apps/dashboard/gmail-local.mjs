@@ -168,6 +168,55 @@ function collectTextParts(payload, out = []) {
   return out;
 }
 
+const ATS_FROM_RE =
+  /greenhouse(?:-mail)?\.io|lever\.co|ashbyhq\.com|myworkday\.com|smartrecruiters\.com|workable\.com|jobvite\.com|icims\.com|breezy\.hr|teamtailor\.com|rippling\.com|@careers\.|noreply@.*careers/i;
+
+const JOB_BOARD_FROM_RE =
+  /foundit\.|monster\.|indeed\.|shine\.com|naukri\.|glassdoor\.|ziprecruiter\.|dice\.com|wellfound\.|angel\.co|hirist\.|instahyre\./i;
+
+/**
+ * Job-board alerts, digests, and promo mail — excluded from the Job emails UI.
+ * LinkedIn application/status updates are kept; LinkedIn job alerts are noise.
+ */
+export function isNoiseJobEmail({ subject = "", snippet = "", from = "", bodyText = "" }) {
+  const fromL = String(from).toLowerCase();
+  const text = `${subject}\n${snippet}\n${from}\n${bodyText}`.toLowerCase();
+
+  if (JOB_BOARD_FROM_RE.test(fromL) || JOB_BOARD_FROM_RE.test(text.slice(0, 500))) {
+    return true;
+  }
+
+  // Financial / non-employer "application" false positives (e.g. IPO apps)
+  if (/\bipo\b/.test(text) && /application/.test(text) && !ATS_FROM_RE.test(fromL)) {
+    return true;
+  }
+
+  if (/linkedin\.com/.test(fromL)) {
+    const statusSignal =
+      /your application|application (?:was |has been )?(?:viewed|submitted|received|updated|update)|not moving forward|unfortunately|interview|recruiter (?:from|at)|message from .{0,40} recruiter|inmail/.test(
+        text,
+      );
+    const alertNoise =
+      /jobs? (?:for you|you may|alert|recommendation|near you)|new jobs|people hired|premium|sponsored|because you expressed interest|similar (?:jobs|to jobs)|top job picks|hiring in your network|jobs you might like/.test(
+        text,
+      );
+    if (alertNoise && !statusSignal) return true;
+    if (!statusSignal && /jobs-noreply@linkedin|@e\.linkedin\.com|notifications-noreply@linkedin/.test(fromL)) {
+      return true;
+    }
+  }
+
+  const digestNoise =
+    /\b(?:newsletter|weekly digest|job digest|jobs digest|daily jobs|jobs roundup)\b/.test(text) ||
+    (/view in browser|tai #|podcast|our interview with|this week(?:'s)? episode/.test(text) &&
+      !/thank you for applying|application (?:has been )?received|security code for your application/.test(
+        text,
+      ));
+  if (digestNoise) return true;
+
+  return false;
+}
+
 export function classifyJobEmail({ subject = "", snippet = "", from = "", bodyText = "" }) {
   const text = `${subject}\n${snippet}\n${from}\n${bodyText}`.toLowerCase();
 
@@ -201,13 +250,79 @@ export function classifyJobEmail({ subject = "", snippet = "", from = "", bodyTe
     return "interview";
   }
   if (
-    /thank you for applying|thanks for applying|application (?:has been )?received|we received your application|successfully submitted your application|application confirmation|your application to .* (?:has been|was) (?:received|submitted)|we(?:'ve| have) received your application/.test(
+    /thank you for applying|thanks for applying|application (?:has been )?received|we received your application|successfully submitted your application|application confirmation|your application to .* (?:has been|was) (?:received|submitted)|we(?:'ve| have) received your application|your application to .+ at .+/.test(
       text,
     )
   ) {
     return "confirmation";
   }
+  if (
+    !newsletter &&
+    (/recruiter|talent (?:partner|acquisition|sourcer)|hiring manager|i(?:'|’)(?:m| am) reaching out|reaching out (?:about|regarding)|opportunity at|open role at|would you be (?:open|interested)|sourcing for|i came across your (?:profile|resume)/.test(
+      text,
+    ) ||
+      (/from:.+recruiter|@.*recruit/.test(text) && /role|position|opportunity|hiring/.test(text)))
+  ) {
+    return "recruiter";
+  }
   return "other";
+}
+
+/** Best-effort company label for the Job emails list. */
+export function guessCompany({ subject = "", from = "" } = {}) {
+  const subj = String(subject || "");
+  const patterns = [
+    /thank you for applying to\s+(.+?)(?:!|$)/i,
+    /thanks for applying to\s+(.+?)(?:!|$)/i,
+    /security code for your application to\s+(.+)$/i,
+    /your application to\s+.+\s+at\s+(.+)$/i,
+    /application to\s+(.+?)\s+(?:has been|was)\b/i,
+    /next steps for your job application:\s*.+\s+at\s+(.+)$/i,
+    /interview (?:invitation )?with\s+(.+)$/i,
+  ];
+  for (const re of patterns) {
+    const m = subj.match(re);
+    if (m?.[1]) {
+      const cleaned = m[1]
+        .replace(/\s*[|·•].*$/, "")
+        .replace(/\s+via\s+LinkedIn.*$/i, "")
+        .trim();
+      if (cleaned && cleaned.length < 80) return cleaned;
+    }
+  }
+
+  const display = String(from || "").replace(/<[^>]+>/, "").trim();
+  const withoutRole = display
+    .replace(/\b(hiring team|talent team|recruiting team|careers team|no[- ]?reply|noreply)\b/gi, "")
+    .replace(/\s+from\s+/i, " ")
+    .replace(/["']/g, "")
+    .trim();
+  if (withoutRole && withoutRole.length >= 2 && withoutRole.length < 60) {
+    // "Helena from Jobgether" → Jobgether; "OpenAI Hiring Team" → OpenAI
+    const fromMatch = withoutRole.match(/^(.+?)\s+from\s+(.+)$/i);
+    if (fromMatch?.[2]) return fromMatch[2].trim();
+    const words = withoutRole.replace(/\s{2,}/g, " ").trim();
+    if (words && !/@/.test(words)) return words;
+  }
+
+  const email = String(from || "").match(/<([^>]+)>/)?.[1] || String(from || "");
+  const [local, host = ""] = email.split("@");
+  // walmart@myworkday.com → Walmart
+  if (/myworkday\.com$/i.test(host) && local && !/no[-_]?reply|noreply|donotreply/i.test(local)) {
+    return local.charAt(0).toUpperCase() + local.slice(1);
+  }
+  if (host && !/gmail|googlemail|outlook|yahoo|hotmail|linkedin|greenhouse|lever\.co|ashbyhq|myworkday|indeed|foundit|monster|shine/.test(host)) {
+    const root = host.split(".").slice(-2, -1)[0] || host.split(".")[0];
+    if (root && root.length >= 2) {
+      return root.charAt(0).toUpperCase() + root.slice(1);
+    }
+  }
+  return null;
+}
+
+export function threadLinkFor(threadId) {
+  if (!threadId) return null;
+  return `https://mail.google.com/mail/u/0/#inbox/${threadId}`;
 }
 
 function normalizeCompany(s) {
@@ -389,6 +504,8 @@ export async function syncGmailConfirmations(opts = {}) {
       ...credentialsMissingError(dir),
       missing: auth.missing,
       confirmations: [],
+      jobEmails: [],
+      noiseExcluded: 0,
       scanned: 0,
       lookbackDays: opts.lookbackDays || DEFAULT_LOOKBACK_DAYS,
     };
@@ -399,15 +516,41 @@ export async function syncGmailConfirmations(opts = {}) {
     await getAccessToken(auth);
     const ids = await listRecentMessages(auth, lookbackDays);
     const confirmations = [];
+    const jobEmails = [];
+    let noiseExcluded = 0;
     for (const id of ids) {
       const msg = await loadMessage(auth, id);
+      if (isNoiseJobEmail(msg)) {
+        noiseExcluded += 1;
+        continue;
+      }
       const classification = classifyJobEmail(msg);
-      if (classification === "other") continue;
       const jobId = matchJobId(opts.jobs || [], msg);
       const snippet =
         classification === "verification"
           ? "[verification code redacted]"
           : msg.snippet;
+      const company = guessCompany(msg);
+      const threadLink = threadLinkFor(msg.threadId);
+
+      // Job emails UI: real signals only (skip residual "other" digests)
+      if (classification !== "other") {
+        jobEmails.push({
+          date: msg.date,
+          from: msg.from,
+          company,
+          subject: msg.subject,
+          category: classification,
+          snippet,
+          messageId: msg.id,
+          threadId: msg.threadId || null,
+          threadLink,
+          jobId,
+        });
+      }
+
+      // Apply-status confirmations: same categories as before (+ recruiter stored but not auto-applied)
+      if (classification === "other") continue;
       confirmations.push({
         id: msg.id,
         threadId: msg.threadId,
@@ -418,18 +561,24 @@ export async function syncGmailConfirmations(opts = {}) {
         snippet,
         date: msg.date,
         reason: msg.subject || classification,
+        company,
+        threadLink,
       });
     }
 
+    const noiseNote =
+      noiseExcluded > 0 ? ` Excluded ${noiseExcluded} job-board/promo message(s).` : "";
     return {
       connected: true,
       credentialsDir: dir,
       source: "local_oauth",
-      note: `Synced ${confirmations.length} job-related message(s) from Gmail (last ${lookbackDays}d) via local OAuth at ${dir}.`,
+      note: `Synced ${jobEmails.length} job email(s) from Gmail (last ${lookbackDays}d) via local OAuth at ${dir}.${noiseNote}`,
       error: null,
       scanned: ids.length,
       lookbackDays,
+      noiseExcluded,
       confirmations,
+      jobEmails,
     };
   } catch (err) {
     return {
@@ -439,6 +588,8 @@ export async function syncGmailConfirmations(opts = {}) {
       error: err instanceof Error ? err.message : String(err),
       note: SETUP_HINT,
       confirmations: [],
+      jobEmails: [],
+      noiseExcluded: 0,
       scanned: 0,
       lookbackDays,
     };

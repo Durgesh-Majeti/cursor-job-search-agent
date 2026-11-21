@@ -69,6 +69,27 @@ export type ResumeInfo = {
   analysis: ResumeAnalysis | null;
 };
 
+export type JobEmailCategory =
+  | "confirmation"
+  | "rejection"
+  | "interview"
+  | "recruiter"
+  | "verification"
+  | "other";
+
+export type JobEmail = {
+  date: string | null;
+  from: string | null;
+  company: string | null;
+  subject: string | null;
+  category: JobEmailCategory | string;
+  snippet: string | null;
+  messageId: string | null;
+  threadId?: string | null;
+  threadLink?: string | null;
+  jobId?: string | null;
+};
+
 export type GmailStatus = {
   connected: boolean;
   updatedAt: string | null;
@@ -76,6 +97,8 @@ export type GmailStatus = {
   note: string;
   confirmationCount: number;
   confirmations: unknown[];
+  jobEmailCount?: number;
+  jobEmails?: JobEmail[];
   message?: string;
   error?: string | null;
   credentialsDir?: string | null;

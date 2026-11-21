@@ -880,6 +880,22 @@ async function applyGmailConfirmationsToStatus(confirmations, now) {
   return { markedApplied, markedOther };
 }
 
+async function loadJobEmailsDoc() {
+  const file = path.join(PROJECT_DIR, "gmail-job-emails.json");
+  const data = await readJson(file, {
+    updatedAt: null,
+    connected: false,
+    emails: [],
+  });
+  return { file, data };
+}
+
+async function writeJobEmailsDoc(payload) {
+  const { file } = await loadJobEmailsDoc();
+  await writeJson(file, payload);
+  return payload;
+}
+
 async function gmailStatus() {
   const file = path.join(PROJECT_DIR, "gmail-confirmations.json");
   const data = await readJson(file, {
@@ -887,11 +903,13 @@ async function gmailStatus() {
     connected: false,
     confirmations: [],
   });
+  const { data: jobEmailsDoc } = await loadJobEmailsDoc();
   const probe = await probeGmailConnection();
   const connected = Boolean(probe.connected);
+  const emails = Array.isArray(jobEmailsDoc.emails) ? jobEmailsDoc.emails : [];
   return {
     connected,
-    updatedAt: data.updatedAt || null,
+    updatedAt: data.updatedAt || jobEmailsDoc.updatedAt || null,
     source: data.source || (connected ? "local_oauth" : "disconnected"),
     note: connected
       ? data.note || probe.note
@@ -900,7 +918,15 @@ async function gmailStatus() {
     credentialsDir: probe.credentialsDir || resolveGmailMcpDir(),
     confirmationCount: (data.confirmations || []).length,
     confirmations: data.confirmations || [],
+    jobEmailCount: emails.length,
+    jobEmails: emails,
   };
+}
+
+function sortByDateDesc(rows, dateKey = "date") {
+  return [...(rows || [])].sort((a, b) =>
+    String(b?.[dateKey] || "").localeCompare(String(a?.[dateKey] || "")),
+  );
 }
 
 async function gmailSync(body = {}) {
@@ -913,8 +939,11 @@ async function gmailSync(body = {}) {
   const now = new Date().toISOString();
 
   // Manual ingest still supported (tests / offline paste)
-  if (Array.isArray(body.confirmations)) {
-    existing.confirmations = body.confirmations;
+  if (Array.isArray(body.confirmations) || Array.isArray(body.jobEmails)) {
+    const confirmations = Array.isArray(body.confirmations)
+      ? body.confirmations
+      : existing.confirmations || [];
+    existing.confirmations = confirmations;
     existing.connected = body.connected !== false;
     existing.source = body.source || "dashboard_upload";
     existing.updatedAt = now;
@@ -924,8 +953,32 @@ async function gmailSync(body = {}) {
     existing.error = null;
     await writeJson(file, existing);
 
+    const manualEmails = Array.isArray(body.jobEmails)
+      ? body.jobEmails
+      : confirmations.map((c) => ({
+          date: c.date || null,
+          from: c.from || null,
+          company: c.company || null,
+          subject: c.subject || null,
+          category: c.classification || c.category || "other",
+          snippet: c.snippet || null,
+          messageId: c.messageId || c.id || null,
+          threadId: c.threadId || null,
+          threadLink: c.threadLink || null,
+          jobId: c.jobId || null,
+        }));
+    await writeJobEmailsDoc({
+      updatedAt: now,
+      connected: body.connected !== false,
+      source: body.source || "dashboard_upload",
+      note: existing.note,
+      lookbackDays: body.lookbackDays || null,
+      noiseExcluded: 0,
+      emails: sortByDateDesc(manualEmails),
+    });
+
     const { markedApplied, markedOther } = await applyGmailConfirmationsToStatus(
-      body.confirmations,
+      confirmations,
       now,
     );
 
@@ -971,6 +1024,17 @@ async function gmailSync(body = {}) {
     existing.error = sync.error || sync.note;
     existing.credentialsDir = sync.credentialsDir || resolveGmailMcpDir();
     await writeJson(file, existing);
+    // Keep last job emails list; surface auth error clearly (same as confirmations).
+    const { data: prevEmails } = await loadJobEmailsDoc();
+    await writeJobEmailsDoc({
+      ...prevEmails,
+      updatedAt: now,
+      connected: false,
+      source: "local_oauth",
+      note: sync.error || sync.note,
+      error: sync.error || sync.note,
+      credentialsDir: sync.credentialsDir || resolveGmailMcpDir(),
+    });
     return {
       saved: false,
       connected: false,
@@ -985,9 +1049,7 @@ async function gmailSync(body = {}) {
   }
 
   // Live sync replaces confirmation rows (avoids stale misclassifications)
-  existing.confirmations = [...(sync.confirmations || [])].sort((a, b) =>
-    String(b.date || "").localeCompare(String(a.date || "")),
-  );
+  existing.confirmations = sortByDateDesc(sync.confirmations || []);
   existing.connected = true;
   existing.source = "local_oauth";
   existing.updatedAt = now;
@@ -996,7 +1058,22 @@ async function gmailSync(body = {}) {
   existing.credentialsDir = sync.credentialsDir;
   existing.scanned = sync.scanned;
   existing.lookbackDays = sync.lookbackDays;
+  existing.noiseExcluded = sync.noiseExcluded || 0;
   await writeJson(file, existing);
+
+  const jobEmails = sortByDateDesc(sync.jobEmails || []);
+  await writeJobEmailsDoc({
+    updatedAt: now,
+    connected: true,
+    source: "local_oauth",
+    note: sync.note,
+    error: null,
+    credentialsDir: sync.credentialsDir,
+    scanned: sync.scanned,
+    lookbackDays: sync.lookbackDays,
+    noiseExcluded: sync.noiseExcluded || 0,
+    emails: jobEmails,
+  });
 
   const { markedApplied, markedOther } = await applyGmailConfirmationsToStatus(
     sync.confirmations,
@@ -1010,6 +1087,8 @@ async function gmailSync(body = {}) {
     markedOther,
     scanned: sync.scanned,
     confirmationCount: existing.confirmations.length,
+    jobEmailCount: jobEmails.length,
+    noiseExcluded: sync.noiseExcluded || 0,
     gmail: await gmailStatus(),
     jobs: await buildJobs(),
     message: sync.note,

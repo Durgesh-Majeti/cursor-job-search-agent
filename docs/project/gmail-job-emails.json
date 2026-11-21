@@ -1,0 +1,7 @@
+{
+  "updatedAt": null,
+  "connected": false,
+  "source": "local_oauth",
+  "note": "Run Sync Gmail in the dashboard to load job-related messages.",
+  "emails": []
+}

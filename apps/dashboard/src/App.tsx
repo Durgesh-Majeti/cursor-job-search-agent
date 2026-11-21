@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type {
   DisplayStatus,
   GmailStatus,
+  JobEmail,
   JobRow,
   JobsResponse,
   PlatformId,
@@ -28,6 +29,15 @@ const STATUS_LABEL: Record<DisplayStatus, string> = {
   blocked: "Blocked",
   needs_human: "Needs human",
   skipped: "Skipped",
+};
+
+const JOB_EMAIL_CATEGORY_LABEL: Record<string, string> = {
+  confirmation: "Confirmation",
+  rejection: "Rejection",
+  interview: "Interview",
+  recruiter: "Recruiter",
+  verification: "Verification",
+  other: "Other",
 };
 
 const PLATFORMS: Array<{ id: PlatformId; label: string; hint: string }> = [
@@ -421,9 +431,76 @@ export function App() {
             <p className="panel-note">
               Gmail: {gmail.connected ? "connected" : "not connected"} ·{" "}
               {gmail.confirmationCount} confirmation
-              {gmail.confirmationCount === 1 ? "" : "s"} · {gmail.note}
+              {gmail.confirmationCount === 1 ? "" : "s"}
+              {typeof gmail.jobEmailCount === "number"
+                ? ` · ${gmail.jobEmailCount} job email${gmail.jobEmailCount === 1 ? "" : "s"}`
+                : ""}{" "}
+              · {gmail.note}
             </p>
           ) : null}
+        </div>
+      </section>
+
+      <section className="panel" aria-label="Job emails">
+        <div className="panel-head">
+          <h2>Job emails</h2>
+          <p>
+            Real application / interview / recruiter mail after Sync Gmail.
+            LinkedIn alerts, Indeed, Shine, and foundit digests stay out of this
+            list.
+          </p>
+        </div>
+        <div className="panel-body">
+          {(gmail?.jobEmails?.length ?? 0) === 0 ? (
+            <div className="empty panel-empty">
+              {gmail?.connected
+                ? "No job emails in the last sync window."
+                : "Sync Gmail to load job-related messages."}
+            </div>
+          ) : (
+            <div className="list email-list" role="list">
+              {(gmail?.jobEmails ?? []).map((mail: JobEmail) => (
+                <article
+                  className="row"
+                  role="listitem"
+                  key={mail.messageId || `${mail.date}-${mail.subject}`}
+                >
+                  <div className="row-main">
+                    <div className="row-top">
+                      <span className="company">
+                        {mail.company || mail.from || "Unknown"}
+                      </span>
+                      <span className={`badge email-${mail.category}`}>
+                        {JOB_EMAIL_CATEGORY_LABEL[mail.category] || mail.category}
+                      </span>
+                      {mail.date ? (
+                        <span className="fit">
+                          {new Date(mail.date).toLocaleString()}
+                        </span>
+                      ) : null}
+                    </div>
+                    <h2 className="title">{mail.subject || "(no subject)"}</h2>
+                    <div className="sub">{mail.from}</div>
+                    {mail.snippet ? (
+                      <div className="fit-notes">{mail.snippet}</div>
+                    ) : null}
+                  </div>
+                  <div className="actions">
+                    {mail.threadLink ? (
+                      <a
+                        className="btn btn-link"
+                        href={mail.threadLink}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Open thread
+                      </a>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

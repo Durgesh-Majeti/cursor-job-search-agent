@@ -7,7 +7,7 @@ Vite + React + Node API for Durgesh Majeti’s approve/apply desk.
 - Platform search checkboxes (ATS local; LinkedIn/Indeed/LoopCV stub → worker)
 - Job list with fit scores, filters, Open JD, Skip/Block
 - **Apply** → `docs/project/approvals.json` + `docs/project/apply-queue.json`; if `npm run apply-queue` is alive, claims for Chrome/agent; else UI says start the worker
-- Gmail sync via local OAuth (`%USERPROFILE%\.gmail-mcp` → `docs/project/gmail-confirmations.json` + apply-status updates)
+- Gmail sync via local OAuth (`%USERPROFILE%\.gmail-mcp` → `docs/project/gmail-confirmations.json` + `docs/project/gmail-job-emails.json` + apply-status updates; Job emails UI filters out LinkedIn/Indeed/Shine/foundit noise)
 
 ```bash
 npm install
