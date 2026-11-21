@@ -1,0 +1,11 @@
+{
+  "status": "applied",
+  "reason": "LinkedIn Easy Apply (Lever) confirmation: Your application was sent to Jobgether! + Application submitted now.",
+  "evidence": [
+    "https://www.linkedin.com/jobs/view/4492584466/",
+    "Dialog: Your application was sent to Jobgether!",
+    "Application status: Application submitted (now)"
+  ],
+  "updatedAt": "2026-11-21T06:30:00.450Z",
+  "source": "apply_queue_runner"
+}

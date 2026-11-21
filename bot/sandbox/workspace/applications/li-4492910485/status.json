@@ -1,0 +1,11 @@
+{
+  "status": "applied",
+  "reason": "LinkedIn Easy Apply confirmation: Your application was sent to Saras Analytics! + Application submitted.",
+  "evidence": [
+    "https://www.linkedin.com/jobs/view/4492910485/",
+    "Dialog: Your application was sent to Saras Analytics!",
+    "Application status: Application submitted"
+  ],
+  "updatedAt": "2026-11-21T06:24:09.972Z",
+  "source": "chrome_devtools_apply_worker"
+}

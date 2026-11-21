@@ -1,0 +1,11 @@
+{
+  "status": "applied",
+  "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+  "evidence": [
+    "https://www.linkedin.com/jobs/view/4492937327/",
+    "Application status: Application submitted (now)",
+    "Resume: Majeti Durgesh - AI Engineer Resume.pdf"
+  ],
+  "updatedAt": "2026-11-21T06:22:03.162Z",
+  "source": "chrome_devtools_apply_worker"
+}

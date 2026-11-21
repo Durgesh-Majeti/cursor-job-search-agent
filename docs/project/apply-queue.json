@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T05:51:51.968Z",
+  "updatedAt": "2026-11-21T06:30:21.323Z",
   "note": "Dashboard Apply enqueues here. Run `npm run apply-queue` on durgesh-laptop; Chrome DevTools MCP / agent completes the form.",
   "queue": [
     {
@@ -126,7 +126,7 @@
     {
       "jobId": "li-4486595295",
       "queuedAt": "2026-11-21T05:51:51.963Z",
-      "status": "in_progress",
+      "status": "blocked",
       "company": "VRINDA INTERNATIONAL",
       "title": "Forward Deployed Engineer – Healthcare",
       "url": "https://www.linkedin.com/jobs/view/4486595295/",
@@ -134,7 +134,174 @@
       "fitScore": 89,
       "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
       "claimedAt": "2026-11-21T05:51:51.968Z",
-      "runnerPid": 2488
+      "runnerPid": 2488,
+      "finishedAt": "2026-11-21T06:19:43.012Z",
+      "reason": "LinkedIn: Posted 2 weeks ago (stale >7d). Greater Hyderabad Area · Hybrid. Easy Apply present but recency gate blocks.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4486595295/",
+        "Posted: 2 weeks ago",
+        "Easy Apply button present",
+        "Location: Greater Hyderabad Area · Hybrid"
+      ]
+    },
+    {
+      "jobId": "li-4492937327",
+      "queuedAt": "2026-11-21T06:15:36.627Z",
+      "status": "applied",
+      "company": "9NEXUS",
+      "title": "Forward Deployed Engineer",
+      "url": "https://www.linkedin.com/jobs/view/4492937327/",
+      "source": "linkedin",
+      "fitScore": 92,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:15:36.635Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:22:03.162Z",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492937327/",
+        "Application status: Application submitted (now)",
+        "Resume: Majeti Durgesh - AI Engineer Resume.pdf"
+      ]
+    },
+    {
+      "jobId": "li-4486875112",
+      "queuedAt": "2026-11-21T06:15:44.414Z",
+      "status": "applied",
+      "company": "ANSR",
+      "title": "Forward Deployed Engineer - AI [T500-30601]",
+      "url": "https://www.linkedin.com/jobs/view/4486875112/",
+      "source": "linkedin",
+      "fitScore": 91,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:15:44.420Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:23:05.000Z",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4486875112/",
+        "Application status: Application submitted",
+        "Resume: Majeti Durgesh - AI Engineer Resume.pdf"
+      ]
+    },
+    {
+      "jobId": "li-4492910485",
+      "queuedAt": "2026-11-21T06:15:51.195Z",
+      "status": "applied",
+      "company": "Saras Analytics",
+      "title": "Forward Deployed Engineer",
+      "url": "https://www.linkedin.com/jobs/view/4492910485/",
+      "source": "linkedin",
+      "fitScore": 91,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:15:51.201Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:24:09.972Z",
+      "reason": "LinkedIn Easy Apply confirmation: Your application was sent to Saras Analytics! + Application submitted.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492910485/",
+        "Dialog: Your application was sent to Saras Analytics!",
+        "Application status: Application submitted"
+      ]
+    },
+    {
+      "jobId": "li-4492582743",
+      "queuedAt": "2026-11-21T06:15:54.298Z",
+      "status": "applied",
+      "company": "HealthRecon Connect",
+      "title": "Forward Deployment Engineer",
+      "url": "https://www.linkedin.com/jobs/view/4492582743/",
+      "source": "linkedin",
+      "fitScore": 90,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:15:54.307Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:25:34.604Z",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492582743/",
+        "Application status: Application submitted (now)",
+        "Resume: Majeti Durgesh - AI Engineer Resume.pdf"
+      ]
+    },
+    {
+      "jobId": "li-4492401161",
+      "queuedAt": "2026-11-21T06:15:59.924Z",
+      "status": "applied",
+      "company": "Saras Analytics",
+      "title": "Senior Data Engineer",
+      "url": "https://www.linkedin.com/jobs/view/4492401161/",
+      "source": "linkedin",
+      "fitScore": 89,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:15:59.931Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:26:22.461Z",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492401161/",
+        "Application status: Application submitted",
+        "Resume: Majeti Durgesh - AI Engineer Resume.pdf"
+      ]
+    },
+    {
+      "jobId": "li-4492477033",
+      "queuedAt": "2026-11-21T06:16:06.193Z",
+      "status": "applied",
+      "company": "Apolis",
+      "title": "Senior Data Engineer",
+      "url": "https://www.linkedin.com/jobs/view/4492477033/",
+      "source": "linkedin",
+      "fitScore": 88,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:16:06.201Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:28:57.350Z",
+      "reason": "LinkedIn Easy Apply (Jobdiva) confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492477033/",
+        "Application status: Application submitted (now)",
+        "Review answers submitted: 5-8 yrs, Remote only, US auth No, sponsorship Yes, refs Yes, /yr, W-2 Yes, start Over 4 weeks"
+      ]
+    },
+    {
+      "jobId": "li-4492584466",
+      "queuedAt": "2026-11-21T06:16:12.518Z",
+      "status": "applied",
+      "company": "Jobgether",
+      "title": "Senior AI Engineer (Internal Tools & Agents)",
+      "url": "https://www.linkedin.com/jobs/view/4492584466/",
+      "source": "linkedin",
+      "fitScore": 88,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:16:12.524Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:30:00.450Z",
+      "reason": "LinkedIn Easy Apply (Lever) confirmation: Your application was sent to Jobgether! + Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492584466/",
+        "Dialog: Your application was sent to Jobgether!",
+        "Application status: Application submitted (now)"
+      ]
+    },
+    {
+      "jobId": "ashby-cursor-166c3951",
+      "queuedAt": "2026-11-21T06:16:19.781Z",
+      "status": "blocked",
+      "company": "Cursor",
+      "title": "Forward Deployed Engineer - India",
+      "url": "https://jobs.ashbyhq.com/cursor/166c3951-1d2a-4e61-b79b-bedefe96073b",
+      "source": "ashby",
+      "fitScore": 87,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T06:16:19.789Z",
+      "runnerPid": 15000,
+      "finishedAt": "2026-11-21T06:30:21.319Z",
+      "reason": "Ashby page not found — posting removed or URL invalid (queued id 166c3951). Newer India FDE posting exists under different job UUID but not in this queue.",
+      "evidence": [
+        "https://jobs.ashbyhq.com/cursor/166c3951-1d2a-4e61-b79b-bedefe96073b → Page not found",
+        "https://jobs.ashbyhq.com/cursor/166c3951-1d2a-4e61-b79b-bedefe96073b?embed=true → Page not found"
+      ]
     }
   ]
 }

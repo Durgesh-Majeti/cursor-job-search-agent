@@ -1,0 +1,11 @@
+{
+  "status": "applied",
+  "reason": "LinkedIn Easy Apply (Jobdiva) confirmation: Application status Application submitted now.",
+  "evidence": [
+    "https://www.linkedin.com/jobs/view/4492477033/",
+    "Application status: Application submitted (now)",
+    "Review answers submitted: 5-8 yrs, Remote only, US auth No, sponsorship Yes, refs Yes, /yr, W-2 Yes, start Over 4 weeks"
+  ],
+  "updatedAt": "2026-11-21T06:28:57.350Z",
+  "source": "apply_queue_runner"
+}

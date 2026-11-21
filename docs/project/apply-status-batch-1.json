@@ -1,15 +1,15 @@
 {
   "batch": "approved-batch-1",
-  "updatedAt": "2026-11-21T05:51:35.191Z",
+  "updatedAt": "2026-11-21T06:30:21.319Z",
   "applicationName": "Durgesh Majeti",
   "repoCommit": "92bbdc0",
   "artifactsPushedToMain": true,
   "worker": "durgesh-laptop",
   "counts": {
-    "applied": 5,
-    "blocked": 5,
+    "applied": 12,
+    "blocked": 7,
     "needs_human": 4,
-    "pending_local": 10
+    "pending_local": 9
   },
   "note": "First confirmed apply: Databricks FDE L5 after user entered Greenhouse email security code. MCP upload_file ACL blocks resume path on this worker; Greenhouse may autofill. No invented applied statuses.",
   "jobs": [
@@ -104,11 +104,16 @@
       "jobId": "ashby-cursor-166c3951",
       "company": "Cursor",
       "title": "Forward Deployed Engineer - India",
-      "source": "ashby",
+      "source": "apply_queue_runner",
       "url": "https://jobs.ashbyhq.com/cursor/166c3951-1d2a-4e61-b79b-bedefe96073b",
-      "status": "pending_local",
-      "reason": "Artifacts ready; local apply",
-      "artifactPath": "bot/sandbox/workspace/applications/ashby-cursor-166c3951/"
+      "status": "blocked",
+      "reason": "Ashby page not found — posting removed or URL invalid (queued id 166c3951). Newer India FDE posting exists under different job UUID but not in this queue.",
+      "artifactPath": "bot/sandbox/workspace/applications/ashby-cursor-166c3951/",
+      "evidence": [
+        "https://jobs.ashbyhq.com/cursor/166c3951-1d2a-4e61-b79b-bedefe96073b → Page not found",
+        "https://jobs.ashbyhq.com/cursor/166c3951-1d2a-4e61-b79b-bedefe96073b?embed=true → Page not found"
+      ],
+      "confirmedAt": "2026-11-21T06:30:21.319Z"
     },
     {
       "jobId": "lever-outreach-16657196",
@@ -306,6 +311,135 @@
         "Location: Hyderabad, Telangana, India · On-site"
       ],
       "confirmedAt": "2026-11-21T05:51:35.191Z"
+    },
+    {
+      "jobId": "li-4486595295",
+      "company": "VRINDA INTERNATIONAL",
+      "title": "Forward Deployed Engineer – Healthcare",
+      "source": "chrome_devtools_apply_worker",
+      "url": "https://www.linkedin.com/jobs/view/4486595295/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4486595295/",
+      "status": "blocked",
+      "reason": "LinkedIn: Posted 2 weeks ago (stale >7d). Greater Hyderabad Area · Hybrid. Easy Apply present but recency gate blocks.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4486595295/",
+        "Posted: 2 weeks ago",
+        "Easy Apply button present",
+        "Location: Greater Hyderabad Area · Hybrid"
+      ],
+      "confirmedAt": "2026-11-21T06:19:43.012Z"
+    },
+    {
+      "jobId": "li-4492937327",
+      "company": "9NEXUS",
+      "title": "Forward Deployed Engineer",
+      "source": "chrome_devtools_apply_worker",
+      "url": "https://www.linkedin.com/jobs/view/4492937327/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4492937327/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492937327/",
+        "Application status: Application submitted (now)",
+        "Resume: Majeti Durgesh - AI Engineer Resume.pdf"
+      ],
+      "confirmedAt": "2026-11-21T06:22:03.162Z"
+    },
+    {
+      "jobId": "li-4486875112",
+      "company": "ANSR",
+      "title": "Forward Deployed Engineer - AI [T500-30601]",
+      "source": "chrome_devtools_apply_worker",
+      "url": "https://www.linkedin.com/jobs/view/4486875112/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4486875112/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4486875112/",
+        "Application status: Application submitted",
+        "Resume: Majeti Durgesh - AI Engineer Resume.pdf"
+      ],
+      "confirmedAt": "2026-11-21T06:23:05.000Z"
+    },
+    {
+      "jobId": "li-4492910485",
+      "company": "Saras Analytics",
+      "title": "Forward Deployed Engineer",
+      "source": "chrome_devtools_apply_worker",
+      "url": "https://www.linkedin.com/jobs/view/4492910485/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4492910485/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply confirmation: Your application was sent to Saras Analytics! + Application submitted.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492910485/",
+        "Dialog: Your application was sent to Saras Analytics!",
+        "Application status: Application submitted"
+      ],
+      "confirmedAt": "2026-11-21T06:24:09.972Z"
+    },
+    {
+      "jobId": "li-4492582743",
+      "company": "HealthRecon Connect",
+      "title": "Forward Deployment Engineer",
+      "source": "chrome_devtools_apply_worker",
+      "url": "https://www.linkedin.com/jobs/view/4492582743/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4492582743/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492582743/",
+        "Application status: Application submitted (now)",
+        "Resume: Majeti Durgesh - AI Engineer Resume.pdf"
+      ],
+      "confirmedAt": "2026-11-21T06:25:34.604Z"
+    },
+    {
+      "jobId": "li-4492401161",
+      "company": "Saras Analytics",
+      "title": "Senior Data Engineer",
+      "source": "chrome_devtools_apply_worker",
+      "url": "https://www.linkedin.com/jobs/view/4492401161/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4492401161/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492401161/",
+        "Application status: Application submitted",
+        "Resume: Majeti Durgesh - AI Engineer Resume.pdf"
+      ],
+      "confirmedAt": "2026-11-21T06:26:22.461Z"
+    },
+    {
+      "jobId": "li-4492477033",
+      "company": "Apolis",
+      "title": "Senior Data Engineer",
+      "source": "apply_queue_runner",
+      "url": "https://www.linkedin.com/jobs/view/4492477033/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4492477033/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply (Jobdiva) confirmation: Application status Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492477033/",
+        "Application status: Application submitted (now)",
+        "Review answers submitted: 5-8 yrs, Remote only, US auth No, sponsorship Yes, refs Yes, /yr, W-2 Yes, start Over 4 weeks"
+      ],
+      "confirmedAt": "2026-11-21T06:28:57.350Z"
+    },
+    {
+      "jobId": "li-4492584466",
+      "company": "Jobgether",
+      "title": "Senior AI Engineer (Internal Tools & Agents)",
+      "source": "apply_queue_runner",
+      "url": "https://www.linkedin.com/jobs/view/4492584466/",
+      "artifactPath": "bot/sandbox/workspace/applications/li-4492584466/",
+      "status": "applied",
+      "reason": "LinkedIn Easy Apply (Lever) confirmation: Your application was sent to Jobgether! + Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4492584466/",
+        "Dialog: Your application was sent to Jobgether!",
+        "Application status: Application submitted (now)"
+      ],
+      "confirmedAt": "2026-11-21T06:30:00.450Z"
     }
   ]
 }
