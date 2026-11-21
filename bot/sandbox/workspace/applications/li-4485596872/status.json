@@ -1,0 +1,12 @@
+{
+  "status": "blocked",
+  "reason": "LinkedIn: No longer accepting applications. Posted 2 weeks ago (stale >7d). Hyderabad on-site.",
+  "evidence": [
+    "https://www.linkedin.com/jobs/view/4485596872/",
+    "No longer accepting applications",
+    "Posted: 2 weeks ago",
+    "Location: Hyderabad, Telangana, India · On-site"
+  ],
+  "updatedAt": "2026-11-21T05:51:35.191Z",
+  "source": "chrome_devtools_apply_worker"
+}

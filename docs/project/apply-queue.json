@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-05T11:19:43.995Z",
-  "note": "Agent/self-hosted worker watches this queue. Apply from the dashboard enqueues a job; Chrome DevTools MCP on the worker performs the browser apply.",
+  "updatedAt": "2026-11-21T05:51:51.968Z",
+  "note": "Dashboard Apply enqueues here. Run `npm run apply-queue` on durgesh-laptop; Chrome DevTools MCP / agent completes the form.",
   "queue": [
     {
       "jobId": "ashby-openai-4c078f82",
@@ -20,6 +20,121 @@
         "https://jobs.ashbyhq.com/openai/4c078f82-93b9-427c-8fd8-95de198884b4/application",
         "Success heading + Your application was successfully submitted."
       ]
+    },
+    {
+      "jobId": "li-4486317960",
+      "queuedAt": "2026-11-05T11:54:07.432Z",
+      "status": "applied",
+      "company": "Jobgether",
+      "title": "Senior AI Engineer",
+      "url": "https://www.linkedin.com/jobs/view/4486317960/",
+      "source": "linkedin",
+      "fitScore": 86,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-05T11:54:07.454Z",
+      "runnerPid": 15256,
+      "finishedAt": "2026-11-05T12:03:02.157Z",
+      "reason": "LinkedIn Easy Apply (Lever-powered) confirmation: Your application was sent to Jobgether! + Application submitted now.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4486317960/",
+        "Dialog: Your application was sent to Jobgether!",
+        "Application status: Application submitted (now)"
+      ]
+    },
+    {
+      "jobId": "li-4487737623",
+      "queuedAt": "2026-11-05T11:54:44.512Z",
+      "status": "applied",
+      "company": "Innova ESI",
+      "title": "Senior Data Engineer - Semantic Layer",
+      "url": "https://www.linkedin.com/jobs/view/4487737623/",
+      "source": "linkedin",
+      "fitScore": 87,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-05T11:54:44.536Z",
+      "runnerPid": 15256,
+      "finishedAt": "2026-11-05T12:03:02.143Z",
+      "reason": "LinkedIn Easy Apply confirmation: Application status Application submitted now. List shows Applied.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4487737623/",
+        "Application status: Application submitted (now)",
+        "Search card: Applied · Be an early applicant"
+      ]
+    },
+    {
+      "jobId": "li-4487730364",
+      "queuedAt": "2026-11-21T05:44:15.149Z",
+      "status": "blocked",
+      "company": "Newpage Solutions",
+      "title": "Forward Deployed Engineer",
+      "url": "https://www.linkedin.com/jobs/view/4487730364/",
+      "source": "linkedin",
+      "fitScore": 91,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T05:44:15.164Z",
+      "runnerPid": 2488,
+      "finishedAt": "2026-11-21T05:50:10.052Z",
+      "reason": "LinkedIn: No longer accepting applications. Posted 2 weeks ago (stale >7d). Location Chennai on-site.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4487730364/",
+        "No longer accepting applications",
+        "Posted: 2 weeks ago",
+        "Location: Chennai, Tamil Nadu, India · On-site"
+      ]
+    },
+    {
+      "jobId": "gh-databricks-8878946002",
+      "queuedAt": "2026-11-21T05:47:26.231Z",
+      "status": "blocked",
+      "company": "Databricks",
+      "title": "Evergreen - AI Engineer, AI FDE",
+      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8878946002",
+      "source": "greenhouse",
+      "fitScore": 91,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T05:47:26.239Z",
+      "runnerPid": 2488,
+      "finishedAt": "2026-11-21T05:51:35.161Z",
+      "reason": "Job removed/closed: databricks.com careers 404; Greenhouse API Job not found for 8878946002; job-boards.greenhouse.io redirects to open-positions.",
+      "evidence": [
+        "databricks.com careers page 404: Oops, we're missing data on this page",
+        "api.greenhouse.io/v1/boards/databricks/jobs/8878946002 -> status 404 Job not found",
+        "job-boards.greenhouse.io/databricks/jobs/8878946002 redirects to open-positions"
+      ]
+    },
+    {
+      "jobId": "li-4485596872",
+      "queuedAt": "2026-11-21T05:47:38.087Z",
+      "status": "blocked",
+      "company": "ThinkWise Consulting LLP",
+      "title": "Senior Data Engineer",
+      "url": "https://www.linkedin.com/jobs/view/4485596872/",
+      "source": "linkedin",
+      "fitScore": 90,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T05:47:38.096Z",
+      "runnerPid": 2488,
+      "finishedAt": "2026-11-21T05:51:35.191Z",
+      "reason": "LinkedIn: No longer accepting applications. Posted 2 weeks ago (stale >7d). Hyderabad on-site.",
+      "evidence": [
+        "https://www.linkedin.com/jobs/view/4485596872/",
+        "No longer accepting applications",
+        "Posted: 2 weeks ago",
+        "Location: Hyderabad, Telangana, India · On-site"
+      ]
+    },
+    {
+      "jobId": "li-4486595295",
+      "queuedAt": "2026-11-21T05:51:51.963Z",
+      "status": "in_progress",
+      "company": "VRINDA INTERNATIONAL",
+      "title": "Forward Deployed Engineer – Healthcare",
+      "url": "https://www.linkedin.com/jobs/view/4486595295/",
+      "source": "linkedin",
+      "fitScore": 89,
+      "note": "Apply via Chrome DevTools MCP on self-hosted worker. Dashboard does not submit forms.",
+      "claimedAt": "2026-11-21T05:51:51.968Z",
+      "runnerPid": 2488
     }
   ]
 }

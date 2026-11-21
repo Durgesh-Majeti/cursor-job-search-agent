@@ -1,0 +1,12 @@
+{
+  "status": "blocked",
+  "reason": "LinkedIn: No longer accepting applications. Posted 2 weeks ago (stale >7d). Location Chennai on-site.",
+  "evidence": [
+    "https://www.linkedin.com/jobs/view/4487730364/",
+    "No longer accepting applications",
+    "Posted: 2 weeks ago",
+    "Location: Chennai, Tamil Nadu, India · On-site"
+  ],
+  "updatedAt": "2026-11-21T05:50:10.052Z",
+  "source": "chrome_devtools_apply_worker"
+}
